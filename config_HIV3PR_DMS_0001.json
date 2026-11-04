@@ -1,0 +1,73 @@
+{
+  "dataset_id": "HIV3PR_DMS_0001",
+  "source": {
+    "format": "rdat",
+    "path": "HIV3PR_DMS_0001.rdat",
+    "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/HIV3PR_DMS_0001.rdat",
+    "landing_page": "https://rmdb.stanford.edu/detail/HIV3PR_DMS_0001/"
+  },
+  "select": {
+    "annotation": {
+      "mutation": "WT"
+    }
+  },
+  "conditions": {
+    "temperature_c": 37,
+    "mg_mM": 10,
+    "note": "Copied from the RDAT ANNOTATION line; cross-checked against the file at run time."
+  },
+  "numbering": "source",
+  "mask": [
+    [
+      8932,
+      8964
+    ],
+    [
+      9173,
+      9192
+    ]
+  ],
+  "mask_reason": "8932-8964: suppressed reactivity, used for priming (RDAT comment says 8931-8964; 8932 is the first position in the file). 9173-9192: the appended 20-nt Tail2 primer-binding sequence.",
+  "region": [
+    8965,
+    9014
+  ],
+  "anchoring": "five_prime",
+  "window_grid": {
+    "step": 10
+  },
+  "epsilon": 0.02,
+  "evaluation_nucleotides": null,
+  "temperature_c": "from_dataset",
+  "bootstrap": {
+    "n_boot": 2000,
+    "block_length": 10,
+    "seed": 0
+  },
+  "models": {
+    "rnafold": {
+      "energy_params": "turner2004",
+      "salt_molar": null,
+      "dangles": 2
+    },
+    "contrafold": {
+      "executable": "/home/ldibari/miniforge3/bin/contrafold",
+      "posterior_threshold": 1e-05
+    },
+    "mxfold2": {
+      "executable": "mxfold2",
+      "param": null,
+      "seed": 0
+    }
+  },
+  "report_notes": {
+    "construct": "HIV-1 NL4-3 3' UTR (RDAT numbering = NL4-3 genome), DMS mutate-and-map, WT row; the version without the A20 tail (HIV3PR_DMS_0003/0004 add one).",
+    "region": "R = 8965-9014: the first 50 nt with data. The region of interest is the 5'-most stretch with data (uniform rule across datasets: first 50 nt, 100 nt for the 1266-nt HOXA9 UTR), with 5'-anchored windows mimicking the mRNA use case.",
+    "data_caveats": [
+      "Same buffer and temperature as TRP4P6_DMS_0007 (300 mM Na-cacodylate pH 7.0, 10 mM MgCl2, 37 \u00b0C)."
+    ],
+    "limitations": [
+      "The HIV-1 3' UTR is a viral mRNA region, not a cellular 5' UTR."
+    ]
+  }
+}

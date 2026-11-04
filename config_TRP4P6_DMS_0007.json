@@ -1,0 +1,43 @@
+{
+  "dataset_id": "TRP4P6_DMS_0007",
+  "source": {
+    "format": "rdat",
+    "path": "TRP4P6_DMS_0007.rdat",
+    "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/TRP4P6_DMS_0007.rdat",
+    "landing_page": "https://rmdb.stanford.edu/detail/TRP4P6_DMS_0007/"
+  },
+  "select": {"annotation": {"mutation": "WT"}},
+  "conditions": {
+    "temperature_c": 37,
+    "mg_mM": 10,
+    "buffer": "Na-cacodylate 300 mM (pH 7.0)",
+    "note": "Copied from the RDAT ANNOTATION line; cross-checked against the file at run time."
+  },
+  "numbering": "source",
+  "mask": [[272, 291]],
+  "mask_reason": "3' primer-binding tail (AAAGAAACAACAACAACAAC): reactivities ~1e-4, no structural information. Stored as numbers in the RDAT, set to NaN here.",
+  "region": [100, 140],
+  "anchoring": "five_prime",
+  "window_grid": {"step": 10},
+  "epsilon": 0.02,
+  "evaluation_nucleotides": null,
+  "temperature_c": "from_dataset",
+  "bootstrap": {"n_boot": 2000, "block_length": 10, "seed": 0},
+  "models": {
+    "rnafold": {"energy_params": "turner2004", "salt_molar": null, "dangles": 2},
+    "contrafold": {"executable": "/home/ldibari/miniforge3/bin/contrafold", "posterior_threshold": 1e-05},
+    "mxfold2": {"executable": "mxfold2", "param": null, "seed": 0}
+  },
+  "report_notes": {
+    "construct": "P4-P6 domain of the Tetrahymena group I intron (RDAT NAME: 'P4-P6 domain, Tetrahymena ribozyme'), mutate-and-map experiment (DMS, MaP readout); only the wild-type row is used.",
+    "region": "R = 100-140 (RDAT numbering) contains the 5' arms of P4 (107-112) and P5 (116-121) and the start of P5a (127-138); their partners lie at 200-214 and 180-195, i.e. outside small 5'-anchored windows. This mimics the mRNA use case (5'-anchored window growing toward 3').",
+    "data_caveats": [
+      "Positions 90-92 have reactivity exactly 0 and 93-99 are near 0 (possible low read coverage near the 5' end); they lie outside R and do not enter E.",
+      "Low DMS signal in the first positions of R (100-103) is part of E; it may reflect coverage rather than structure."
+    ],
+    "limitations": [
+      "P4-P6 is not an mRNA: the test validates the method, but choosing a window for mRNAs requires mRNA probing data.",
+      "P4-P6 forms an extensive Mg2+-dependent tertiary structure (A-rich bulge, tetraloop/receptor), which none of the models capture."
+    ]
+  }
+}

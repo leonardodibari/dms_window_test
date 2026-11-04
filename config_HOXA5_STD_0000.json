@@ -1,0 +1,69 @@
+{
+  "dataset_id": "HOXA5_STD_0000",
+  "source": {
+    "format": "rdat",
+    "path": "HOXA5_STD_0000.rdat",
+    "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/HOXA5_STD_0000.rdat",
+    "landing_page": "https://rmdb.stanford.edu/detail/HOXA5_STD_0000/"
+  },
+  "select": {
+    "annotation": {
+      "modifier": "DMS",
+      "sequenceSource": "PAGE"
+    }
+  },
+  "conditions": {
+    "temperature_c": 24,
+    "mg_mM": 10,
+    "note": "Copied from the RDAT ANNOTATION line; cross-checked against the file at run time."
+  },
+  "numbering": "source",
+  "mask": [
+    [
+      230,
+      237
+    ]
+  ],
+  "mask_reason": "Trailing run of 8 exact zeros at the 3' end (no data at the read end).",
+  "region": [
+    1,
+    50
+  ],
+  "anchoring": "five_prime",
+  "window_grid": {
+    "step": 10
+  },
+  "epsilon": 0.02,
+  "evaluation_nucleotides": null,
+  "temperature_c": "from_dataset",
+  "bootstrap": {
+    "n_boot": 2000,
+    "block_length": 10,
+    "seed": 0
+  },
+  "models": {
+    "rnafold": {
+      "energy_params": "turner2004",
+      "salt_molar": null,
+      "dangles": 2
+    },
+    "contrafold": {
+      "executable": "/home/ldibari/miniforge3/bin/contrafold",
+      "posterior_threshold": 1e-05
+    },
+    "mxfold2": {
+      "executable": "mxfold2",
+      "param": null,
+      "seed": 0
+    }
+  },
+  "report_notes": {
+    "construct": "Hox A5 mRNA 5' UTR (237 nt); the DMS, PAGE-purified row (row 4 of 4: rows 1/3 are 1M7, row 2 DMS non-PAGE).",
+    "region": "R = 1-50: the 5' end of the UTR. The region of interest is the 5'-most stretch with data (uniform rule across datasets: first 50 nt, 100 nt for the 1266-nt HOXA9 UTR), with 5'-anchored windows mimicking the mRNA use case.",
+    "data_caveats": [
+      "RNA was heat-denatured, then folded at 37 \u00b0C for 20 min with 10 mM MgCl2; annotated probing temperature 24 \u00b0C.",
+      "DMS data are normalised so that G/U are 0; G/U are outside E anyway."
+    ],
+    "limitations": []
+  }
+}

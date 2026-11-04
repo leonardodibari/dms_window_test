@@ -1,0 +1,67 @@
+{
+  "dataset_id": "RNASEP_DMS_0000",
+  "source": {
+    "format": "rdat",
+    "path": "RNASEP_DMS_0000.rdat",
+    "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/RNASEP_DMS_0000.rdat",
+    "landing_page": "https://rmdb.stanford.edu/detail/RNASEP_DMS_0000/"
+  },
+  "select": {
+    "annotation": {
+      "mutation": "WT"
+    }
+  },
+  "conditions": {
+    "temperature_c": 37,
+    "mg_mM": 10,
+    "note": "Copied from the RDAT ANNOTATION line; cross-checked against the file at run time."
+  },
+  "numbering": "source",
+  "mask": [
+    [
+      1,
+      3
+    ]
+  ],
+  "mask_reason": "Leading run of 3 exact zeros at the 5' end (no data at the read end).",
+  "region": [
+    4,
+    53
+  ],
+  "anchoring": "five_prime",
+  "window_grid": {
+    "step": 10
+  },
+  "epsilon": 0.02,
+  "evaluation_nucleotides": null,
+  "temperature_c": "from_dataset",
+  "bootstrap": {
+    "n_boot": 2000,
+    "block_length": 10,
+    "seed": 0
+  },
+  "models": {
+    "rnafold": {
+      "energy_params": "turner2004",
+      "salt_molar": null,
+      "dangles": 2
+    },
+    "contrafold": {
+      "executable": "/home/ldibari/miniforge3/bin/contrafold",
+      "posterior_threshold": 1e-05
+    },
+    "mxfold2": {
+      "executable": "mxfold2",
+      "param": null,
+      "seed": 0
+    }
+  },
+  "report_notes": {
+    "construct": "RNase P catalytic domain, B. stearothermophilus (265 nt), DMS mutate-and-map (data of Homan et al., PNAS 2014, reanalysed with MaP2D), WT row of the 37 \u00b0C entry.",
+    "region": "R = 4-53: the first 50 nt with data. It contains the 5' strand of P1, whose partner is at the 3' end, so small windows cut it. The region of interest is the 5'-most stretch with data (uniform rule across datasets: first 50 nt, 100 nt for the 1266-nt HOXA9 UTR), with 5'-anchored windows mimicking the mRNA use case.",
+    "data_caveats": [],
+    "limitations": [
+      "RNase P is a structured ribozyme with Mg2+-dependent tertiary structure, not an mRNA."
+    ]
+  }
+}

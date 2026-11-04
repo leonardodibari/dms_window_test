@@ -1,0 +1,4407 @@
+{
+  "run_started_utc": "2026-11-04T18:24:13+00:00",
+  "command": "python run_test.py config_TRP4P6_DMS_0007.json config_HOXA9_STD_0000.json config_HOXA5_STD_0000.json config_CSDE1_DMS_0000.json config_HIV3PR_DMS_0001.json config_RNASEP_DMS_0000.json --out .",
+  "tools": {
+    "python": "3.12.8 | packaged by conda-forge | (main, Dec  5 2024, 14:24:40) [GCC 13.3.0]",
+    "python_executable": "/home/ldibari/RNAIdea/EncoderDna/EncoderDna_env/bin/python",
+    "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.39",
+    "numpy": "2.5.1",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.1",
+    "ViennaRNA": "2.7.2",
+    "torch": "2.13.0+cu130"
+  },
+  "datasets": {
+    "TRP4P6_DMS_0007": {
+      "config_file": "config_TRP4P6_DMS_0007.json",
+      "config": {
+        "dataset_id": "TRP4P6_DMS_0007",
+        "source": {
+          "format": "rdat",
+          "path": "TRP4P6_DMS_0007.rdat",
+          "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/TRP4P6_DMS_0007.rdat",
+          "landing_page": "https://rmdb.stanford.edu/detail/TRP4P6_DMS_0007/"
+        },
+        "select": {
+          "annotation": {
+            "mutation": "WT"
+          }
+        },
+        "conditions": {
+          "temperature_c": 37,
+          "mg_mM": 10,
+          "buffer": "Na-cacodylate 300 mM (pH 7.0)",
+          "note": "Copied from the RDAT ANNOTATION line; cross-checked against the file at run time."
+        },
+        "numbering": "source",
+        "mask": [
+          [
+            272,
+            291
+          ]
+        ],
+        "mask_reason": "3' primer-binding tail (AAAGAAACAACAACAACAAC): reactivities ~1e-4, no structural information. Stored as numbers in the RDAT, set to NaN here.",
+        "region": [
+          100,
+          140
+        ],
+        "anchoring": "five_prime",
+        "window_grid": {
+          "step": 10
+        },
+        "epsilon": 0.02,
+        "evaluation_nucleotides": null,
+        "temperature_c": "from_dataset",
+        "bootstrap": {
+          "n_boot": 2000,
+          "block_length": 10,
+          "seed": 0
+        },
+        "models": {
+          "rnafold": {
+            "energy_params": "turner2004",
+            "salt_molar": null,
+            "dangles": 2
+          },
+          "contrafold": {
+            "executable": "/home/ldibari/miniforge3/bin/contrafold",
+            "posterior_threshold": 1e-05
+          },
+          "mxfold2": {
+            "executable": "mxfold2",
+            "param": null,
+            "seed": 0
+          }
+        },
+        "report_notes": {
+          "construct": "P4-P6 domain of the Tetrahymena group I intron (RDAT NAME: 'P4-P6 domain, Tetrahymena ribozyme'), mutate-and-map experiment (DMS, MaP readout); only the wild-type row is used.",
+          "region": "R = 100-140 (RDAT numbering) contains the 5' arms of P4 (107-112) and P5 (116-121) and the start of P5a (127-138); their partners lie at 200-214 and 180-195, i.e. outside small 5'-anchored windows. This mimics the mRNA use case (5'-anchored window growing toward 3').",
+          "data_caveats": [
+            "Positions 90-92 have reactivity exactly 0 and 93-99 are near 0 (possible low read coverage near the 5' end); they lie outside R and do not enter E.",
+            "Low DMS signal in the first positions of R (100-103) is part of E; it may reflect coverage rather than structure."
+          ],
+          "limitations": [
+            "P4-P6 is not an mRNA: the test validates the method, but choosing a window for mRNAs requires mRNA probing data.",
+            "P4-P6 forms an extensive Mg2+-dependent tertiary structure (A-rich bulge, tetraloop/receptor), which none of the models capture."
+          ]
+        }
+      },
+      "effective": {
+        "region_1based": [
+          11,
+          51
+        ],
+        "region_source": [
+          100,
+          140
+        ],
+        "anchoring": "five_prime",
+        "window_grid": [
+          51,
+          60,
+          70,
+          80,
+          90,
+          100,
+          110,
+          120,
+          130,
+          140,
+          150,
+          160,
+          170,
+          180,
+          190,
+          200,
+          202
+        ],
+        "windows_1based": {
+          "51": [
+            1,
+            51
+          ],
+          "60": [
+            1,
+            60
+          ],
+          "70": [
+            1,
+            70
+          ],
+          "80": [
+            1,
+            80
+          ],
+          "90": [
+            1,
+            90
+          ],
+          "100": [
+            1,
+            100
+          ],
+          "110": [
+            1,
+            110
+          ],
+          "120": [
+            1,
+            120
+          ],
+          "130": [
+            1,
+            130
+          ],
+          "140": [
+            1,
+            140
+          ],
+          "150": [
+            1,
+            150
+          ],
+          "160": [
+            1,
+            160
+          ],
+          "170": [
+            1,
+            170
+          ],
+          "180": [
+            1,
+            180
+          ],
+          "190": [
+            1,
+            190
+          ],
+          "200": [
+            1,
+            200
+          ],
+          "202": [
+            1,
+            202
+          ]
+        },
+        "evaluation_nucleotides": [
+          "A",
+          "C"
+        ],
+        "evaluation_nucleotides_source": "reagent mapping (DMS)",
+        "E_1based": [
+          11,
+          12,
+          15,
+          16,
+          20,
+          24,
+          25,
+          26,
+          32,
+          33,
+          34,
+          35,
+          36,
+          38,
+          39,
+          43,
+          44,
+          47,
+          48,
+          49,
+          50,
+          51
+        ],
+        "epsilon": 0.02,
+        "bootstrap": {
+          "n_boot": 2000,
+          "block_length_nt": 10,
+          "seed": 0,
+          "ci_level": 0.95,
+          "scheme": "paired circular block bootstrap over positions of R; E members kept"
+        }
+      },
+      "dataset": {
+        "sequence": "GGCCAAAACAACGGAAUUGCGGGAAAGGGGUCAACAGCCGUUCAGUACCAAGUCUCAGGGGAAACUUUGAGAUGGCCUUGCAAAGGGUAUGGUAAUAAGCUGACGGACAUGGUCCUAACCACGCAGCCAAGUCCUAAGUCAACAGAUCUUCUGUUGAUAUGGAUGCAGUUCAAAACCAAACCAAAGAAACAACAACAACAAC",
+        "length": 202,
+        "reagent": "DMS",
+        "conditions": {
+          "temperature_c": 37.0,
+          "buffer": "Na-cacodylate:300mM(pH7.0)",
+          "mg_mM": 10.0,
+          "chemicals": [
+            "Na-cacodylate:300mM(pH7.0)",
+            "MgCl2:10mM"
+          ]
+        },
+        "source_url": "https://rmdb.stanford.edu/detail/TRP4P6_DMS_0007/",
+        "download_date": "2026-11-04T16:42:08+00:00",
+        "provenance": {
+          "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/TRP4P6_DMS_0007.rdat",
+          "download_date": "2026-11-04T16:42:08+00:00",
+          "sha256": "337ffa4ebf180836de9ad8ad1c845326cdc720be07f3d56a48d41ae3b9adbab4",
+          "path": "TRP4P6_DMS_0007.rdat",
+          "sha256_now": "337ffa4ebf180836de9ad8ad1c845326cdc720be07f3d56a48d41ae3b9adbab4"
+        },
+        "rdat_name": "P4-P6 domain, Tetrahymena ribozyme"
+      },
+      "selection_and_masking": {
+        "selection": {
+          "annotation": {
+            "mutation": "WT"
+          }
+        },
+        "row": 1,
+        "row_annotations": {
+          "mutation": [
+            "WT"
+          ]
+        },
+        "n_constructs_in_file": 203,
+        "nan_in_source": [],
+        "masked_indices_0based": [
+          182,
+          183,
+          184,
+          185,
+          186,
+          187,
+          188,
+          189,
+          190,
+          191,
+          192,
+          193,
+          194,
+          195,
+          196,
+          197,
+          198,
+          199,
+          200,
+          201
+        ],
+        "mask_config": [
+          [
+            272,
+            291
+          ]
+        ],
+        "mask_reason": "3' primer-binding tail (AAAGAAACAACAACAACAAC): reactivities ~1e-4, no structural information. Stored as numbers in the RDAT, set to NaN here.",
+        "numbering": "source"
+      },
+      "models": {
+        "RNAfold": {
+          "model": "RNAfold",
+          "implementation": "ViennaRNA Python bindings (RNA.fold_compound.pf / bpp)",
+          "version": "2.7.2",
+          "temperature_c": 37.0,
+          "energy_params": "turner2004",
+          "salt_correction": false,
+          "salt_molar": 1.021,
+          "dangles": 2,
+          "can_represent": {
+            "temperature": true,
+            "monovalent_salt": true,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        },
+        "CONTRAfold": {
+          "model": "CONTRAfold",
+          "executable": "/home/ldibari/miniforge3/bin/contrafold",
+          "binary_sha256": "a1383b0f6589cce02fc1e5530223baed9f4b0bdce2a73af9ab353c2d59b86166",
+          "version": "CONTRAFold version 2.01 - RNA secondary structure prediction",
+          "conda_package_version": "2.02",
+          "posterior_threshold": 1e-05,
+          "params": "built-in default",
+          "temperature_c": null,
+          "can_represent": {
+            "temperature": false,
+            "monovalent_salt": false,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        },
+        "MXfold2": {
+          "model": "MXfold2",
+          "executable": "/home/ldibari/RNAIdea/EncoderDna/EncoderDna_env/bin/mxfold2",
+          "version": "0.1.2",
+          "param": "bundled default (TrainSetAB.conf, model MixC)",
+          "seed": 0,
+          "temperature_c": null,
+          "output_precision": "5 decimals per p_ij",
+          "can_represent": {
+            "temperature": false,
+            "monovalent_salt": false,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        }
+      },
+      "model_call_metadata": {
+        "RNAfold": {
+          "202": {
+            "ensemble_energy": -59.50498962402344,
+            "max_clip": 0.0
+          },
+          "51": {
+            "ensemble_energy": -7.955301284790039,
+            "max_clip": 0.0
+          },
+          "60": {
+            "ensemble_energy": -9.26572036743164,
+            "max_clip": 0.0
+          },
+          "70": {
+            "ensemble_energy": -12.610455513000488,
+            "max_clip": 0.0
+          },
+          "80": {
+            "ensemble_energy": -24.375686645507812,
+            "max_clip": 0.0
+          },
+          "90": {
+            "ensemble_energy": -25.326194763183594,
+            "max_clip": 0.0
+          },
+          "100": {
+            "ensemble_energy": -27.34709930419922,
+            "max_clip": 0.0
+          },
+          "110": {
+            "ensemble_energy": -34.75791549682617,
+            "max_clip": 0.0
+          },
+          "120": {
+            "ensemble_energy": -36.049957275390625,
+            "max_clip": 0.0
+          },
+          "130": {
+            "ensemble_energy": -43.817344665527344,
+            "max_clip": 0.0
+          },
+          "140": {
+            "ensemble_energy": -44.18045425415039,
+            "max_clip": 0.0
+          },
+          "150": {
+            "ensemble_energy": -45.10716247558594,
+            "max_clip": 0.0
+          },
+          "160": {
+            "ensemble_energy": -54.4940071105957,
+            "max_clip": 0.0
+          },
+          "170": {
+            "ensemble_energy": -58.62105178833008,
+            "max_clip": 0.0
+          },
+          "180": {
+            "ensemble_energy": -59.14310073852539,
+            "max_clip": 0.0
+          },
+          "190": {
+            "ensemble_energy": -59.45117950439453,
+            "max_clip": 0.0
+          },
+          "200": {
+            "ensemble_energy": -59.50418472290039,
+            "max_clip": 0.0
+          }
+        },
+        "CONTRAfold": {
+          "202": {
+            "n_pairs_reported": 2840,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00201
+          },
+          "51": {
+            "n_pairs_reported": 363,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0005
+          },
+          "60": {
+            "n_pairs_reported": 545,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00059
+          },
+          "70": {
+            "n_pairs_reported": 759,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0006900000000000001
+          },
+          "80": {
+            "n_pairs_reported": 747,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00079
+          },
+          "90": {
+            "n_pairs_reported": 939,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0008900000000000001
+          },
+          "100": {
+            "n_pairs_reported": 1145,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00099
+          },
+          "110": {
+            "n_pairs_reported": 1380,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00109
+          },
+          "120": {
+            "n_pairs_reported": 1485,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00119
+          },
+          "130": {
+            "n_pairs_reported": 1334,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0012900000000000001
+          },
+          "140": {
+            "n_pairs_reported": 1798,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0013900000000000002
+          },
+          "150": {
+            "n_pairs_reported": 2128,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0014900000000000002
+          },
+          "160": {
+            "n_pairs_reported": 2034,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00159
+          },
+          "170": {
+            "n_pairs_reported": 2077,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00169
+          },
+          "180": {
+            "n_pairs_reported": 2386,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0017900000000000001
+          },
+          "190": {
+            "n_pairs_reported": 2656,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0018900000000000002
+          },
+          "200": {
+            "n_pairs_reported": 2810,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00199
+          }
+        },
+        "MXfold2": {
+          "202": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00101,
+            "max_asymmetry": 0.0
+          },
+          "51": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.000255,
+            "max_asymmetry": 0.0
+          },
+          "60": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00030000000000000003,
+            "max_asymmetry": 0.0
+          },
+          "70": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00035000000000000005,
+            "max_asymmetry": 0.0
+          },
+          "80": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0004,
+            "max_asymmetry": 0.0
+          },
+          "90": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00045000000000000004,
+            "max_asymmetry": 0.0
+          },
+          "100": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0005,
+            "max_asymmetry": 0.0
+          },
+          "110": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00055,
+            "max_asymmetry": 0.0
+          },
+          "120": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0006000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "130": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0006500000000000001,
+            "max_asymmetry": 0.0
+          },
+          "140": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0007000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "150": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00075,
+            "max_asymmetry": 0.0
+          },
+          "160": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0008,
+            "max_asymmetry": 0.0
+          },
+          "170": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0008500000000000001,
+            "max_asymmetry": 0.0
+          },
+          "180": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0009000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "190": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0009500000000000001,
+            "max_asymmetry": 0.0
+          },
+          "200": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.001,
+            "max_asymmetry": 0.0
+          }
+        }
+      },
+      "condition_flags": [
+        "10 mM Mg\u00b2\u207a in the experiment: no model represents Mg\u00b2\u207a or tertiary structure.",
+        "Experiment at 37 \u00b0C: RNAfold folds at 37 \u00b0C; CONTRAfold and MXfold2 have no temperature parameter.",
+        "Buffer Na-cacodylate:300mM(pH7.0): RNAfold uses standard 1.021 M monovalent salt (correction off); CONTRAfold/MXfold2 have no salt dependence."
+      ],
+      "contrafold_threshold_check": {
+        "threshold": 1e-05,
+        "reference_threshold": 1e-09,
+        "windows": {
+          "51": {
+            "max_abs_du_all_positions": 0.0,
+            "rho_at_threshold": 0.7605872388481084,
+            "rho_at_reference": 0.7605872388481084,
+            "abs_rho_change": 0.0
+          },
+          "202": {
+            "max_abs_du_all_positions": 0.0,
+            "rho_at_threshold": 0.639751552795031,
+            "rho_at_reference": 0.639751552795031,
+            "abs_rho_change": 0.0
+          }
+        }
+      },
+      "suggested_windows": {
+        "RNAfold": {
+          "epsilon": 0.02,
+          "W_first": 51,
+          "W_stable": 51,
+          "W_ci": 90
+        },
+        "CONTRAfold": {
+          "epsilon": 0.02,
+          "W_first": 51,
+          "W_stable": 140,
+          "W_ci": 150
+        },
+        "MXfold2": {
+          "epsilon": 0.02,
+          "W_first": 51,
+          "W_stable": 140,
+          "W_ci": 200
+        }
+      },
+      "figures": [
+        "TRP4P6_DMS_0007_fig_rho_vs_window.png",
+        "TRP4P6_DMS_0007_fig_delta_rho_vs_window.png",
+        "TRP4P6_DMS_0007_fig_convergence_vs_window.png",
+        "TRP4P6_DMS_0007_fig_profile.png",
+        "TRP4P6_DMS_0007_fig_du_heatmap.png",
+        "TRP4P6_DMS_0007_fig_u_vs_reactivity.png"
+      ]
+    },
+    "HOXA9_STD_0000": {
+      "config_file": "config_HOXA9_STD_0000.json",
+      "config": {
+        "dataset_id": "HOXA9_STD_0000",
+        "source": {
+          "format": "rdat",
+          "path": "HOXA9_STD_0000.rdat",
+          "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/HOXA9_STD_0000.rdat",
+          "landing_page": "https://rmdb.stanford.edu/detail/HOXA9_STD_0000/"
+        },
+        "select": {
+          "annotation": {
+            "sequenceSource": "PAGE"
+          }
+        },
+        "conditions": {
+          "temperature_c": 24,
+          "mg_mM": 10,
+          "note": "Copied from the RDAT ANNOTATION line; cross-checked against the file at run time."
+        },
+        "numbering": "source",
+        "mask": [
+          [
+            1258,
+            1266
+          ]
+        ],
+        "mask_reason": "Trailing run of 9 exact zeros at the 3' end (no data at the read end).",
+        "region": [
+          1,
+          100
+        ],
+        "anchoring": "five_prime",
+        "window_grid": {
+          "step": 50
+        },
+        "epsilon": 0.02,
+        "evaluation_nucleotides": null,
+        "temperature_c": "from_dataset",
+        "bootstrap": {
+          "n_boot": 2000,
+          "block_length": 10,
+          "seed": 0
+        },
+        "models": {
+          "rnafold": {
+            "energy_params": "turner2004",
+            "salt_molar": null,
+            "dangles": 2
+          },
+          "contrafold": {
+            "executable": "/home/ldibari/miniforge3/bin/contrafold",
+            "posterior_threshold": 1e-05
+          },
+          "mxfold2": {
+            "executable": "mxfold2",
+            "param": null,
+            "seed": 0
+          }
+        },
+        "report_notes": {
+          "construct": "Hox A9 mRNA 5' UTR (1266 nt), 1M7 SHAPE, ligation-based readout (ligSHAPE), PAGE-purified RNA (row 1 of 2; row 2 is non-PAGE). Data were normalised over a 350-nt window (file comment).",
+          "region": "R = 1-100: the 5' end of the UTR. The region of interest is the 5'-most stretch with data (uniform rule across datasets: first 50 nt, 100 nt for the 1266-nt HOXA9 UTR), with 5'-anchored windows mimicking the mRNA use case.",
+          "data_caveats": [
+            "RNA was heat-denatured, then folded at 37 \u00b0C for 20 min with 10 mM MgCl2; the annotated probing temperature is 24 \u00b0C. RNAfold folds at the annotated 24 \u00b0C.",
+            "SHAPE reagent: all four nucleotides enter E.",
+            "Window grid step is 50 nt because MXfold2 needs ~100 s per full-length fold."
+          ],
+          "limitations": [
+            "HOXA9 data are normalised SHAPE reactivities with some negative values; Spearman \u03c1 is unaffected by the normalisation but the noise floor is not modelled."
+          ]
+        }
+      },
+      "effective": {
+        "region_1based": [
+          1,
+          100
+        ],
+        "region_source": [
+          1,
+          100
+        ],
+        "anchoring": "five_prime",
+        "window_grid": [
+          100,
+          150,
+          200,
+          250,
+          300,
+          350,
+          400,
+          450,
+          500,
+          550,
+          600,
+          650,
+          700,
+          750,
+          800,
+          850,
+          900,
+          950,
+          1000,
+          1050,
+          1100,
+          1150,
+          1200,
+          1250,
+          1266
+        ],
+        "windows_1based": {
+          "100": [
+            1,
+            100
+          ],
+          "150": [
+            1,
+            150
+          ],
+          "200": [
+            1,
+            200
+          ],
+          "250": [
+            1,
+            250
+          ],
+          "300": [
+            1,
+            300
+          ],
+          "350": [
+            1,
+            350
+          ],
+          "400": [
+            1,
+            400
+          ],
+          "450": [
+            1,
+            450
+          ],
+          "500": [
+            1,
+            500
+          ],
+          "550": [
+            1,
+            550
+          ],
+          "600": [
+            1,
+            600
+          ],
+          "650": [
+            1,
+            650
+          ],
+          "700": [
+            1,
+            700
+          ],
+          "750": [
+            1,
+            750
+          ],
+          "800": [
+            1,
+            800
+          ],
+          "850": [
+            1,
+            850
+          ],
+          "900": [
+            1,
+            900
+          ],
+          "950": [
+            1,
+            950
+          ],
+          "1000": [
+            1,
+            1000
+          ],
+          "1050": [
+            1,
+            1050
+          ],
+          "1100": [
+            1,
+            1100
+          ],
+          "1150": [
+            1,
+            1150
+          ],
+          "1200": [
+            1,
+            1200
+          ],
+          "1250": [
+            1,
+            1250
+          ],
+          "1266": [
+            1,
+            1266
+          ]
+        },
+        "evaluation_nucleotides": [
+          "A",
+          "C",
+          "G",
+          "U"
+        ],
+        "evaluation_nucleotides_source": "reagent mapping (1M7)",
+        "E_1based": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100
+        ],
+        "epsilon": 0.02,
+        "bootstrap": {
+          "n_boot": 2000,
+          "block_length_nt": 10,
+          "seed": 0,
+          "ci_level": 0.95,
+          "scheme": "paired circular block bootstrap over positions of R; E members kept"
+        }
+      },
+      "dataset": {
+        "sequence": "GAAAAAACAGAAGAGGGAAGGAUACCAGAGCGGUUCAUACAGGGCCCAGAAACUAGGCGAGGUGACCCCUCAGCAAGACAAACACCUCUUGAUGUUGACUGGCGAUUUUCCCCAUCUCCAGUCUGGGGAGCGGGACUAGGCAUACAGAUGAUGGAGCUUAGAACCCGCUGGCUAGGGAAUAAAAUUCGCUGGGCAGUUUGUGCUCAAAGAAGUGGGCCAGGGCGCUUGUGACACAAUCAGGGCGUUUGUGACACAAACCCUUGAGGGUUGGCAGUUCUCUCCUUGGCGGUUGCUCUGGUUGCUCUGUGGGGCCUUCCCUGUGGAGCAAGGGUGAUCUGGCCGAUGUGCAAGCGCCUGGCUGGCUUUCCAGUCUGACUAGGGUCGGUAGCCCAUUUUAGGUGGUUGUAUCAUCGACGGUGCGUCGCGACAGGGGCGGUGGUCACUCUGUUUGAGGUGGAGAGAGCCUUGUAUUUGACUUUUCUAGGCCGGCCCUGGGGGCGCGCGCGGGCGGGGGGCUCACAUCUCUGAGGACUGCAAGGAUUAUUUACAGGGUAUUCACCAACCAAACACAACAGUCUAAUUUAACCUUUCCAAGUCCUCAUAAAUUUUUACAGGGAGCCACAGCGAGGCAAACGAAUCUGUUGGUCGCUCCUGACUUUCCACCAGCCUGUGUGGCUUCCGAAACAAUAACUCCUUAUGAAAUAUCAUAAAUAUAGAUUUAAAUACAGUAGAGUGAGAAUGCGAUUUGGCUGCUUUUUUAUGGCUUCAAUUAUUGUCUAAUUUUAUGUGAGGGGCUCUGCUGGCCGUGCUCACACGCGGGACCCGCGCCUUCCUGAUGGCGUGAUUAAUUGUGAUAUAAAAUAGUCCGCUUAAGAAGUGUGUGUGUCUGGUAUGUGUGUGUGUUGGGGGGGUGGCAAGGGAGAGUACAGAGGCAAGGCCAGAUUUGAUCUUUUAAUCUUCGUUGGCCACAAUUAAAACAAACCAGAUCGUGGAGCUGCGCGAUCCCUUUGCAUAAAAACAUAUGGCUUUUGCUAUAAAAAUUAUGACUGCAAAACACCGGGCCAUUAAUAGCGUGCGGAGUGAUUUACGCGUUAUUGUUCUGCCGGGCGGACACGUGACGCGCGUGGCCAAUGGGGGCGCGGGCGCCGGCAACUUAUUAGGUGACUGUACUUCACCCCCCCCUGGUGCCACCAAGUUGUUACAUGAAAUCUGCAGUUUCAUAAUUUCGGCGGGUCGGGCUGGGCCGGCCAGGCGCGGGCUACUGCA",
+        "length": 1266,
+        "reagent": "1M7",
+        "conditions": {
+          "temperature_c": 24.0,
+          "buffer": "Na-HEPES:50mM(pH8.0)",
+          "mg_mM": 10.0,
+          "chemicals": [
+            "Na-HEPES:50mM(pH8.0)",
+            "MgCl2:10mM"
+          ]
+        },
+        "source_url": "https://rmdb.stanford.edu/detail/HOXA9_STD_0000/",
+        "download_date": "2026-11-04T17:32:31+00:00",
+        "provenance": {
+          "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/HOXA9_STD_0000.rdat",
+          "download_date": "2026-11-04T17:32:31+00:00",
+          "sha256": "1ee9008cd773b2b76a789cb0bddbb59bc677823360ece4404facfdffe1cad7ee",
+          "path": "HOXA9_STD_0000.rdat",
+          "sha256_now": "1ee9008cd773b2b76a789cb0bddbb59bc677823360ece4404facfdffe1cad7ee"
+        },
+        "rdat_name": "Hox A9 mRNA 5' UTR"
+      },
+      "selection_and_masking": {
+        "selection": {
+          "annotation": {
+            "sequenceSource": "PAGE"
+          }
+        },
+        "row": 1,
+        "row_annotations": {
+          "modifier": [
+            "1M7"
+          ],
+          "sequenceSource": [
+            "PAGE"
+          ],
+          "MAPseq": [
+            "ligSHAPE"
+          ]
+        },
+        "n_constructs_in_file": 2,
+        "nan_in_source": [],
+        "masked_indices_0based": [
+          1257,
+          1258,
+          1259,
+          1260,
+          1261,
+          1262,
+          1263,
+          1264,
+          1265
+        ],
+        "mask_config": [
+          [
+            1258,
+            1266
+          ]
+        ],
+        "mask_reason": "Trailing run of 9 exact zeros at the 3' end (no data at the read end).",
+        "numbering": "source"
+      },
+      "models": {
+        "RNAfold": {
+          "model": "RNAfold",
+          "implementation": "ViennaRNA Python bindings (RNA.fold_compound.pf / bpp)",
+          "version": "2.7.2",
+          "temperature_c": 24.0,
+          "energy_params": "turner2004",
+          "salt_correction": false,
+          "salt_molar": 1.021,
+          "dangles": 2,
+          "can_represent": {
+            "temperature": true,
+            "monovalent_salt": true,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        },
+        "CONTRAfold": {
+          "model": "CONTRAfold",
+          "executable": "/home/ldibari/miniforge3/bin/contrafold",
+          "binary_sha256": "a1383b0f6589cce02fc1e5530223baed9f4b0bdce2a73af9ab353c2d59b86166",
+          "version": "CONTRAFold version 2.01 - RNA secondary structure prediction",
+          "conda_package_version": "2.02",
+          "posterior_threshold": 1e-05,
+          "params": "built-in default",
+          "temperature_c": null,
+          "can_represent": {
+            "temperature": false,
+            "monovalent_salt": false,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        },
+        "MXfold2": {
+          "model": "MXfold2",
+          "executable": "/home/ldibari/RNAIdea/EncoderDna/EncoderDna_env/bin/mxfold2",
+          "version": "0.1.2",
+          "param": "bundled default (TrainSetAB.conf, model MixC)",
+          "seed": 0,
+          "temperature_c": null,
+          "output_precision": "5 decimals per p_ij",
+          "can_represent": {
+            "temperature": false,
+            "monovalent_salt": false,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        }
+      },
+      "model_call_metadata": {
+        "RNAfold": {
+          "1266": {
+            "ensemble_energy": -612.4678955078125,
+            "max_clip": 0.0
+          },
+          "100": {
+            "ensemble_energy": -31.61327362060547,
+            "max_clip": 0.0
+          },
+          "150": {
+            "ensemble_energy": -53.156124114990234,
+            "max_clip": 0.0
+          },
+          "200": {
+            "ensemble_energy": -84.02906036376953,
+            "max_clip": 0.0
+          },
+          "250": {
+            "ensemble_energy": -108.79226684570312,
+            "max_clip": 0.0
+          },
+          "300": {
+            "ensemble_energy": -139.04307556152344,
+            "max_clip": 0.0
+          },
+          "350": {
+            "ensemble_energy": -168.66580200195312,
+            "max_clip": 0.0
+          },
+          "400": {
+            "ensemble_energy": -201.34146118164062,
+            "max_clip": 0.0
+          },
+          "450": {
+            "ensemble_energy": -228.4882354736328,
+            "max_clip": 0.0
+          },
+          "500": {
+            "ensemble_energy": -253.87222290039062,
+            "max_clip": 0.0
+          },
+          "550": {
+            "ensemble_energy": -281.26434326171875,
+            "max_clip": 0.0
+          },
+          "600": {
+            "ensemble_energy": -295.1703796386719,
+            "max_clip": 0.0
+          },
+          "650": {
+            "ensemble_energy": -312.3144226074219,
+            "max_clip": 0.0
+          },
+          "700": {
+            "ensemble_energy": -336.1054382324219,
+            "max_clip": 0.0
+          },
+          "750": {
+            "ensemble_energy": -345.6327819824219,
+            "max_clip": 0.0
+          },
+          "800": {
+            "ensemble_energy": -368.7455749511719,
+            "max_clip": 0.0
+          },
+          "850": {
+            "ensemble_energy": -396.9662780761719,
+            "max_clip": 0.0
+          },
+          "900": {
+            "ensemble_energy": -421.0118103027344,
+            "max_clip": 0.0
+          },
+          "950": {
+            "ensemble_energy": -450.7401123046875,
+            "max_clip": 0.0
+          },
+          "1000": {
+            "ensemble_energy": -468.819091796875,
+            "max_clip": 0.0
+          },
+          "1050": {
+            "ensemble_energy": -489.0843505859375,
+            "max_clip": 0.0
+          },
+          "1100": {
+            "ensemble_energy": -509.6136779785156,
+            "max_clip": 0.0
+          },
+          "1150": {
+            "ensemble_energy": -548.2324829101562,
+            "max_clip": 0.0
+          },
+          "1200": {
+            "ensemble_energy": -571.8613891601562,
+            "max_clip": 0.0
+          },
+          "1250": {
+            "ensemble_energy": -597.1200561523438,
+            "max_clip": 0.0
+          }
+        },
+        "CONTRAfold": {
+          "1266": {
+            "n_pairs_reported": 41997,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.012650000000000002
+          },
+          "100": {
+            "n_pairs_reported": 1236,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00099
+          },
+          "150": {
+            "n_pairs_reported": 2762,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0014900000000000002
+          },
+          "200": {
+            "n_pairs_reported": 3607,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00199
+          },
+          "250": {
+            "n_pairs_reported": 5847,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00249
+          },
+          "300": {
+            "n_pairs_reported": 7176,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00299
+          },
+          "350": {
+            "n_pairs_reported": 9387,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0034900000000000005
+          },
+          "400": {
+            "n_pairs_reported": 9585,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0039900000000000005
+          },
+          "450": {
+            "n_pairs_reported": 14022,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00449
+          },
+          "500": {
+            "n_pairs_reported": 15415,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0049900000000000005
+          },
+          "550": {
+            "n_pairs_reported": 17949,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00549
+          },
+          "600": {
+            "n_pairs_reported": 21753,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0059900000000000005
+          },
+          "650": {
+            "n_pairs_reported": 24503,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00649
+          },
+          "700": {
+            "n_pairs_reported": 25078,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0069900000000000006
+          },
+          "750": {
+            "n_pairs_reported": 27422,
+            "max_clip": 0.002987349100000092,
+            "max_threshold_bias_bound": 0.007490000000000001
+          },
+          "800": {
+            "n_pairs_reported": 31464,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00799
+          },
+          "850": {
+            "n_pairs_reported": 32112,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.008490000000000001
+          },
+          "900": {
+            "n_pairs_reported": 33334,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.008990000000000001
+          },
+          "950": {
+            "n_pairs_reported": 36811,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00949
+          },
+          "1000": {
+            "n_pairs_reported": 41497,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00999
+          },
+          "1050": {
+            "n_pairs_reported": 44543,
+            "max_clip": 0.003824587999999851,
+            "max_threshold_bias_bound": 0.010490000000000001
+          },
+          "1100": {
+            "n_pairs_reported": 47528,
+            "max_clip": 0.0021673174999996547,
+            "max_threshold_bias_bound": 0.010990000000000002
+          },
+          "1150": {
+            "n_pairs_reported": 47907,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.01149
+          },
+          "1200": {
+            "n_pairs_reported": 42708,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.01199
+          },
+          "1250": {
+            "n_pairs_reported": 43380,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.012490000000000001
+          }
+        },
+        "MXfold2": {
+          "1266": {
+            "max_clip": 0.0015399999999998748,
+            "rounding_bound": 0.0063300000000000006,
+            "max_asymmetry": 0.0
+          },
+          "100": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0005,
+            "max_asymmetry": 0.0
+          },
+          "150": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00075,
+            "max_asymmetry": 0.0
+          },
+          "200": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.001,
+            "max_asymmetry": 0.0
+          },
+          "250": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00125,
+            "max_asymmetry": 0.0
+          },
+          "300": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0015,
+            "max_asymmetry": 0.0
+          },
+          "350": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00175,
+            "max_asymmetry": 0.0
+          },
+          "400": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.002,
+            "max_asymmetry": 0.0
+          },
+          "450": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0022500000000000003,
+            "max_asymmetry": 0.0
+          },
+          "500": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0025,
+            "max_asymmetry": 0.0
+          },
+          "550": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0027500000000000003,
+            "max_asymmetry": 0.0
+          },
+          "600": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.003,
+            "max_asymmetry": 0.0
+          },
+          "650": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0032500000000000003,
+            "max_asymmetry": 0.0
+          },
+          "700": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0035,
+            "max_asymmetry": 0.0
+          },
+          "750": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0037500000000000003,
+            "max_asymmetry": 0.0
+          },
+          "800": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.004,
+            "max_asymmetry": 0.0
+          },
+          "850": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00425,
+            "max_asymmetry": 0.0
+          },
+          "900": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0045000000000000005,
+            "max_asymmetry": 0.0
+          },
+          "950": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.004750000000000001,
+            "max_asymmetry": 0.0
+          },
+          "1000": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.005,
+            "max_asymmetry": 0.0
+          },
+          "1050": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00525,
+            "max_asymmetry": 0.0
+          },
+          "1100": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0055000000000000005,
+            "max_asymmetry": 0.0
+          },
+          "1150": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.005750000000000001,
+            "max_asymmetry": 0.0
+          },
+          "1200": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.006,
+            "max_asymmetry": 0.0
+          },
+          "1250": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00625,
+            "max_asymmetry": 0.0
+          }
+        }
+      },
+      "condition_flags": [
+        "10 mM Mg\u00b2\u207a in the experiment: no model represents Mg\u00b2\u207a or tertiary structure.",
+        "Experiment at 24 \u00b0C: RNAfold folds at 24 \u00b0C; CONTRAfold and MXfold2 have no temperature parameter.",
+        "Buffer Na-HEPES:50mM(pH8.0): RNAfold uses standard 1.021 M monovalent salt (correction off); CONTRAfold/MXfold2 have no salt dependence."
+      ],
+      "contrafold_threshold_check": {
+        "threshold": 1e-05,
+        "reference_threshold": 1e-09,
+        "windows": {
+          "100": {
+            "max_abs_du_all_positions": 0.0,
+            "rho_at_threshold": 0.41755775577557747,
+            "rho_at_reference": 0.41755775577557747,
+            "abs_rho_change": 0.0
+          },
+          "1266": {
+            "max_abs_du_all_positions": 0.0,
+            "rho_at_threshold": 0.2935013501350135,
+            "rho_at_reference": 0.2935013501350135,
+            "abs_rho_change": 0.0
+          }
+        }
+      },
+      "suggested_windows": {
+        "RNAfold": {
+          "epsilon": 0.02,
+          "W_first": 100,
+          "W_stable": 1250,
+          "W_ci": 1266
+        },
+        "CONTRAfold": {
+          "epsilon": 0.02,
+          "W_first": 100,
+          "W_stable": 1266,
+          "W_ci": 350
+        },
+        "MXfold2": {
+          "epsilon": 0.02,
+          "W_first": 150,
+          "W_stable": 1266,
+          "W_ci": 1266
+        }
+      },
+      "figures": [
+        "HOXA9_STD_0000_fig_rho_vs_window.png",
+        "HOXA9_STD_0000_fig_delta_rho_vs_window.png",
+        "HOXA9_STD_0000_fig_convergence_vs_window.png",
+        "HOXA9_STD_0000_fig_profile.png",
+        "HOXA9_STD_0000_fig_du_heatmap.png",
+        "HOXA9_STD_0000_fig_u_vs_reactivity.png"
+      ]
+    },
+    "HOXA5_STD_0000": {
+      "config_file": "config_HOXA5_STD_0000.json",
+      "config": {
+        "dataset_id": "HOXA5_STD_0000",
+        "source": {
+          "format": "rdat",
+          "path": "HOXA5_STD_0000.rdat",
+          "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/HOXA5_STD_0000.rdat",
+          "landing_page": "https://rmdb.stanford.edu/detail/HOXA5_STD_0000/"
+        },
+        "select": {
+          "annotation": {
+            "modifier": "DMS",
+            "sequenceSource": "PAGE"
+          }
+        },
+        "conditions": {
+          "temperature_c": 24,
+          "mg_mM": 10,
+          "note": "Copied from the RDAT ANNOTATION line; cross-checked against the file at run time."
+        },
+        "numbering": "source",
+        "mask": [
+          [
+            230,
+            237
+          ]
+        ],
+        "mask_reason": "Trailing run of 8 exact zeros at the 3' end (no data at the read end).",
+        "region": [
+          1,
+          50
+        ],
+        "anchoring": "five_prime",
+        "window_grid": {
+          "step": 10
+        },
+        "epsilon": 0.02,
+        "evaluation_nucleotides": null,
+        "temperature_c": "from_dataset",
+        "bootstrap": {
+          "n_boot": 2000,
+          "block_length": 10,
+          "seed": 0
+        },
+        "models": {
+          "rnafold": {
+            "energy_params": "turner2004",
+            "salt_molar": null,
+            "dangles": 2
+          },
+          "contrafold": {
+            "executable": "/home/ldibari/miniforge3/bin/contrafold",
+            "posterior_threshold": 1e-05
+          },
+          "mxfold2": {
+            "executable": "mxfold2",
+            "param": null,
+            "seed": 0
+          }
+        },
+        "report_notes": {
+          "construct": "Hox A5 mRNA 5' UTR (237 nt); the DMS, PAGE-purified row (row 4 of 4: rows 1/3 are 1M7, row 2 DMS non-PAGE).",
+          "region": "R = 1-50: the 5' end of the UTR. The region of interest is the 5'-most stretch with data (uniform rule across datasets: first 50 nt, 100 nt for the 1266-nt HOXA9 UTR), with 5'-anchored windows mimicking the mRNA use case.",
+          "data_caveats": [
+            "RNA was heat-denatured, then folded at 37 \u00b0C for 20 min with 10 mM MgCl2; annotated probing temperature 24 \u00b0C.",
+            "DMS data are normalised so that G/U are 0; G/U are outside E anyway."
+          ],
+          "limitations": []
+        }
+      },
+      "effective": {
+        "region_1based": [
+          1,
+          50
+        ],
+        "region_source": [
+          1,
+          50
+        ],
+        "anchoring": "five_prime",
+        "window_grid": [
+          50,
+          60,
+          70,
+          80,
+          90,
+          100,
+          110,
+          120,
+          130,
+          140,
+          150,
+          160,
+          170,
+          180,
+          190,
+          200,
+          210,
+          220,
+          230,
+          237
+        ],
+        "windows_1based": {
+          "50": [
+            1,
+            50
+          ],
+          "60": [
+            1,
+            60
+          ],
+          "70": [
+            1,
+            70
+          ],
+          "80": [
+            1,
+            80
+          ],
+          "90": [
+            1,
+            90
+          ],
+          "100": [
+            1,
+            100
+          ],
+          "110": [
+            1,
+            110
+          ],
+          "120": [
+            1,
+            120
+          ],
+          "130": [
+            1,
+            130
+          ],
+          "140": [
+            1,
+            140
+          ],
+          "150": [
+            1,
+            150
+          ],
+          "160": [
+            1,
+            160
+          ],
+          "170": [
+            1,
+            170
+          ],
+          "180": [
+            1,
+            180
+          ],
+          "190": [
+            1,
+            190
+          ],
+          "200": [
+            1,
+            200
+          ],
+          "210": [
+            1,
+            210
+          ],
+          "220": [
+            1,
+            220
+          ],
+          "230": [
+            1,
+            230
+          ],
+          "237": [
+            1,
+            237
+          ]
+        },
+        "evaluation_nucleotides": [
+          "A",
+          "C"
+        ],
+        "evaluation_nucleotides_source": "reagent mapping (DMS)",
+        "E_1based": [
+          1,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          21,
+          25,
+          26,
+          27,
+          29,
+          34,
+          35,
+          36,
+          38,
+          40,
+          42,
+          46,
+          47,
+          49,
+          50
+        ],
+        "epsilon": 0.02,
+        "bootstrap": {
+          "n_boot": 2000,
+          "block_length_nt": 10,
+          "seed": 0,
+          "ci_level": 0.95,
+          "scheme": "paired circular block bootstrap over positions of R; E members kept"
+        }
+      },
+      "dataset": {
+        "sequence": "CUCCACCCAACUCCCCCAUUAGUGCACGAGUUUACCUCUAGAGGUCAUCAGGCAGGAUUUACGACUGGACAACAAAAGCACGUGAUUCGAAGUCGUACCCCAUAUUUGGGUGCCUACGUAGGAGGGAACCGAGUACAUGUCCCAGUCAUUUCCAUAAUUCAUCAUAAAUUGUGCAAGGGUGCUAUAGACGCACAAACGACCGCGAGCCACAAAUCAAGCACACAUAUCAAAAAACAA",
+        "length": 237,
+        "reagent": "DMS",
+        "conditions": {
+          "temperature_c": 24.0,
+          "buffer": "Na-HEPES:50mM(pH8.0)",
+          "mg_mM": 10.0,
+          "chemicals": [
+            "Na-HEPES:50mM(pH8.0)",
+            "MgCl2:10mM"
+          ]
+        },
+        "source_url": "https://rmdb.stanford.edu/detail/HOXA5_STD_0000/",
+        "download_date": "2026-11-04T17:27:35+00:00",
+        "provenance": {
+          "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/HOXA5_STD_0000.rdat",
+          "download_date": "2026-11-04T17:27:35+00:00",
+          "sha256": "c6ce4224152eac930e9ca6d597c4e9eee22319e8dd344b0374755b39e6a8f5f0",
+          "path": "HOXA5_STD_0000.rdat",
+          "sha256_now": "c6ce4224152eac930e9ca6d597c4e9eee22319e8dd344b0374755b39e6a8f5f0"
+        },
+        "rdat_name": "Hox A5 mRNA 5' UTR"
+      },
+      "selection_and_masking": {
+        "selection": {
+          "annotation": {
+            "modifier": "DMS",
+            "sequenceSource": "PAGE"
+          }
+        },
+        "row": 4,
+        "row_annotations": {
+          "modifier": [
+            "DMS"
+          ],
+          "sequenceSource": [
+            "PAGE"
+          ],
+          "MAPseq": [
+            "ligSHAPE"
+          ]
+        },
+        "n_constructs_in_file": 4,
+        "nan_in_source": [],
+        "masked_indices_0based": [
+          229,
+          230,
+          231,
+          232,
+          233,
+          234,
+          235,
+          236
+        ],
+        "mask_config": [
+          [
+            230,
+            237
+          ]
+        ],
+        "mask_reason": "Trailing run of 8 exact zeros at the 3' end (no data at the read end).",
+        "numbering": "source"
+      },
+      "models": {
+        "RNAfold": {
+          "model": "RNAfold",
+          "implementation": "ViennaRNA Python bindings (RNA.fold_compound.pf / bpp)",
+          "version": "2.7.2",
+          "temperature_c": 24.0,
+          "energy_params": "turner2004",
+          "salt_correction": false,
+          "salt_molar": 1.021,
+          "dangles": 2,
+          "can_represent": {
+            "temperature": true,
+            "monovalent_salt": true,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        },
+        "CONTRAfold": {
+          "model": "CONTRAfold",
+          "executable": "/home/ldibari/miniforge3/bin/contrafold",
+          "binary_sha256": "a1383b0f6589cce02fc1e5530223baed9f4b0bdce2a73af9ab353c2d59b86166",
+          "version": "CONTRAFold version 2.01 - RNA secondary structure prediction",
+          "conda_package_version": "2.02",
+          "posterior_threshold": 1e-05,
+          "params": "built-in default",
+          "temperature_c": null,
+          "can_represent": {
+            "temperature": false,
+            "monovalent_salt": false,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        },
+        "MXfold2": {
+          "model": "MXfold2",
+          "executable": "/home/ldibari/RNAIdea/EncoderDna/EncoderDna_env/bin/mxfold2",
+          "version": "0.1.2",
+          "param": "bundled default (TrainSetAB.conf, model MixC)",
+          "seed": 0,
+          "temperature_c": null,
+          "output_precision": "5 decimals per p_ij",
+          "can_represent": {
+            "temperature": false,
+            "monovalent_salt": false,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        }
+      },
+      "model_call_metadata": {
+        "RNAfold": {
+          "237": {
+            "ensemble_energy": -65.98955535888672,
+            "max_clip": 0.0
+          },
+          "50": {
+            "ensemble_energy": -8.280019760131836,
+            "max_clip": 0.0
+          },
+          "60": {
+            "ensemble_energy": -12.464025497436523,
+            "max_clip": 0.0
+          },
+          "70": {
+            "ensemble_energy": -14.643667221069336,
+            "max_clip": 0.0
+          },
+          "80": {
+            "ensemble_energy": -14.82096004486084,
+            "max_clip": 0.0
+          },
+          "90": {
+            "ensemble_energy": -18.574600219726562,
+            "max_clip": 0.0
+          },
+          "100": {
+            "ensemble_energy": -25.700912475585938,
+            "max_clip": 0.0
+          },
+          "110": {
+            "ensemble_energy": -31.55023956298828,
+            "max_clip": 0.0
+          },
+          "120": {
+            "ensemble_energy": -35.17127990722656,
+            "max_clip": 0.0
+          },
+          "130": {
+            "ensemble_energy": -42.900089263916016,
+            "max_clip": 0.0
+          },
+          "140": {
+            "ensemble_energy": -47.799224853515625,
+            "max_clip": 0.0
+          },
+          "150": {
+            "ensemble_energy": -48.82740020751953,
+            "max_clip": 0.0
+          },
+          "160": {
+            "ensemble_energy": -48.869873046875,
+            "max_clip": 0.0
+          },
+          "170": {
+            "ensemble_energy": -48.94205856323242,
+            "max_clip": 0.0
+          },
+          "180": {
+            "ensemble_energy": -58.26715087890625,
+            "max_clip": 0.0
+          },
+          "190": {
+            "ensemble_energy": -61.80839920043945,
+            "max_clip": 0.0
+          },
+          "200": {
+            "ensemble_energy": -62.47856903076172,
+            "max_clip": 0.0
+          },
+          "210": {
+            "ensemble_energy": -65.08248138427734,
+            "max_clip": 0.0
+          },
+          "220": {
+            "ensemble_energy": -65.8085708618164,
+            "max_clip": 0.0
+          },
+          "230": {
+            "ensemble_energy": -65.98605346679688,
+            "max_clip": 0.0
+          }
+        },
+        "CONTRAfold": {
+          "237": {
+            "n_pairs_reported": 5615,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00236
+          },
+          "50": {
+            "n_pairs_reported": 327,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0004900000000000001
+          },
+          "60": {
+            "n_pairs_reported": 545,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00059
+          },
+          "70": {
+            "n_pairs_reported": 751,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0006900000000000001
+          },
+          "80": {
+            "n_pairs_reported": 911,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00079
+          },
+          "90": {
+            "n_pairs_reported": 1166,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0008900000000000001
+          },
+          "100": {
+            "n_pairs_reported": 1248,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00099
+          },
+          "110": {
+            "n_pairs_reported": 1491,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00109
+          },
+          "120": {
+            "n_pairs_reported": 1807,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00119
+          },
+          "130": {
+            "n_pairs_reported": 2171,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0012900000000000001
+          },
+          "140": {
+            "n_pairs_reported": 2451,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0013900000000000002
+          },
+          "150": {
+            "n_pairs_reported": 2796,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0014900000000000002
+          },
+          "160": {
+            "n_pairs_reported": 3094,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00159
+          },
+          "170": {
+            "n_pairs_reported": 3388,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00169
+          },
+          "180": {
+            "n_pairs_reported": 3869,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0017900000000000001
+          },
+          "190": {
+            "n_pairs_reported": 4371,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0018900000000000002
+          },
+          "200": {
+            "n_pairs_reported": 4505,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00199
+          },
+          "210": {
+            "n_pairs_reported": 4993,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0020900000000000003
+          },
+          "220": {
+            "n_pairs_reported": 5283,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00219
+          },
+          "230": {
+            "n_pairs_reported": 5503,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0022900000000000004
+          }
+        },
+        "MXfold2": {
+          "237": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.001185,
+            "max_asymmetry": 0.0
+          },
+          "50": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00025,
+            "max_asymmetry": 0.0
+          },
+          "60": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00030000000000000003,
+            "max_asymmetry": 0.0
+          },
+          "70": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00035000000000000005,
+            "max_asymmetry": 0.0
+          },
+          "80": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0004,
+            "max_asymmetry": 0.0
+          },
+          "90": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00045000000000000004,
+            "max_asymmetry": 0.0
+          },
+          "100": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0005,
+            "max_asymmetry": 0.0
+          },
+          "110": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00055,
+            "max_asymmetry": 0.0
+          },
+          "120": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0006000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "130": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0006500000000000001,
+            "max_asymmetry": 0.0
+          },
+          "140": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0007000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "150": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00075,
+            "max_asymmetry": 0.0
+          },
+          "160": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0008,
+            "max_asymmetry": 0.0
+          },
+          "170": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0008500000000000001,
+            "max_asymmetry": 0.0
+          },
+          "180": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0009000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "190": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0009500000000000001,
+            "max_asymmetry": 0.0
+          },
+          "200": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.001,
+            "max_asymmetry": 0.0
+          },
+          "210": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0010500000000000002,
+            "max_asymmetry": 0.0
+          },
+          "220": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0011,
+            "max_asymmetry": 0.0
+          },
+          "230": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0011500000000000002,
+            "max_asymmetry": 0.0
+          }
+        }
+      },
+      "condition_flags": [
+        "10 mM Mg\u00b2\u207a in the experiment: no model represents Mg\u00b2\u207a or tertiary structure.",
+        "Experiment at 24 \u00b0C: RNAfold folds at 24 \u00b0C; CONTRAfold and MXfold2 have no temperature parameter.",
+        "Buffer Na-HEPES:50mM(pH8.0): RNAfold uses standard 1.021 M monovalent salt (correction off); CONTRAfold/MXfold2 have no salt dependence."
+      ],
+      "contrafold_threshold_check": {
+        "threshold": 1e-05,
+        "reference_threshold": 1e-09,
+        "windows": {
+          "50": {
+            "max_abs_du_all_positions": 0.0,
+            "rho_at_threshold": -0.14174816081714736,
+            "rho_at_reference": -0.14174816081714736,
+            "abs_rho_change": 0.0
+          },
+          "237": {
+            "max_abs_du_all_positions": 0.0,
+            "rho_at_threshold": 0.06311120104661043,
+            "rho_at_reference": 0.06311120104661043,
+            "abs_rho_change": 0.0
+          }
+        }
+      },
+      "suggested_windows": {
+        "RNAfold": {
+          "epsilon": 0.02,
+          "W_first": 60,
+          "W_stable": 200,
+          "W_ci": 210
+        },
+        "CONTRAfold": {
+          "epsilon": 0.02,
+          "W_first": 60,
+          "W_stable": 180,
+          "W_ci": 190
+        },
+        "MXfold2": {
+          "epsilon": 0.02,
+          "W_first": 90,
+          "W_stable": 190,
+          "W_ci": 140
+        }
+      },
+      "figures": [
+        "HOXA5_STD_0000_fig_rho_vs_window.png",
+        "HOXA5_STD_0000_fig_delta_rho_vs_window.png",
+        "HOXA5_STD_0000_fig_convergence_vs_window.png",
+        "HOXA5_STD_0000_fig_profile.png",
+        "HOXA5_STD_0000_fig_du_heatmap.png",
+        "HOXA5_STD_0000_fig_u_vs_reactivity.png"
+      ]
+    },
+    "CSDE1_DMS_0000": {
+      "config_file": "config_CSDE1_DMS_0000.json",
+      "config": {
+        "dataset_id": "CSDE1_DMS_0000",
+        "source": {
+          "format": "rdat",
+          "path": "CSDE1_DMS_0000.rdat",
+          "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/CSDE1_DMS_0000.rdat",
+          "landing_page": "https://rmdb.stanford.edu/detail/CSDE1_DMS_0000/"
+        },
+        "select": {
+          "annotation": {
+            "mutation": "WT"
+          }
+        },
+        "conditions": {
+          "note": "Copied from the RDAT ANNOTATION line; cross-checked against the file at run time."
+        },
+        "numbering": "source",
+        "mask": [],
+        "mask_reason": "No extra masking: positions without data are already NaN in the RDAT.",
+        "region": [
+          1,
+          50
+        ],
+        "anchoring": "five_prime",
+        "window_grid": {
+          "step": 10
+        },
+        "epsilon": 0.02,
+        "evaluation_nucleotides": null,
+        "temperature_c": "from_dataset",
+        "bootstrap": {
+          "n_boot": 2000,
+          "block_length": 10,
+          "seed": 0
+        },
+        "models": {
+          "rnafold": {
+            "energy_params": "turner2004",
+            "salt_molar": null,
+            "dangles": 2
+          },
+          "contrafold": {
+            "executable": "/home/ldibari/miniforge3/bin/contrafold",
+            "posterior_threshold": 1e-05
+          },
+          "mxfold2": {
+            "executable": "mxfold2",
+            "param": null,
+            "seed": 0
+          }
+        },
+        "report_notes": {
+          "construct": "Csde1 mRNA fragment, nucleotides 190-386 (RMDB name 'Csde1_190_386'), DMS mutate-and-map; only the WT row is used (CSDE1_DMS_0001 is a second entry of the same design with fewer data points).",
+          "region": "R = 1-50: the 5' end of the fragment. The region of interest is the 5'-most stretch with data (uniform rule across datasets: first 50 nt, 100 nt for the 1266-nt HOXA9 UTR), with 5'-anchored windows mimicking the mRNA use case.",
+          "data_caveats": [
+            "The RDAT annotations give no temperature, buffer or Mg2+; RNAfold uses 37 \u00b0C (default) and this is flagged.",
+            "This is an internal fragment of the mRNA, so the 'full fold' is itself a truncation of the natural transcript."
+          ],
+          "limitations": []
+        }
+      },
+      "effective": {
+        "region_1based": [
+          1,
+          50
+        ],
+        "region_source": [
+          1,
+          50
+        ],
+        "anchoring": "five_prime",
+        "window_grid": [
+          50,
+          60,
+          70,
+          80,
+          90,
+          100,
+          110,
+          120,
+          130,
+          140,
+          150,
+          160,
+          170,
+          180,
+          190,
+          197
+        ],
+        "windows_1based": {
+          "50": [
+            1,
+            50
+          ],
+          "60": [
+            1,
+            60
+          ],
+          "70": [
+            1,
+            70
+          ],
+          "80": [
+            1,
+            80
+          ],
+          "90": [
+            1,
+            90
+          ],
+          "100": [
+            1,
+            100
+          ],
+          "110": [
+            1,
+            110
+          ],
+          "120": [
+            1,
+            120
+          ],
+          "130": [
+            1,
+            130
+          ],
+          "140": [
+            1,
+            140
+          ],
+          "150": [
+            1,
+            150
+          ],
+          "160": [
+            1,
+            160
+          ],
+          "170": [
+            1,
+            170
+          ],
+          "180": [
+            1,
+            180
+          ],
+          "190": [
+            1,
+            190
+          ],
+          "197": [
+            1,
+            197
+          ]
+        },
+        "evaluation_nucleotides": [
+          "A",
+          "C"
+        ],
+        "evaluation_nucleotides_source": "reagent mapping (DMS)",
+        "E_1based": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          32,
+          33,
+          35,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          48,
+          49
+        ],
+        "epsilon": 0.02,
+        "bootstrap": {
+          "n_boot": 2000,
+          "block_length_nt": 10,
+          "seed": 0,
+          "ci_level": 0.95,
+          "scheme": "paired circular block bootstrap over positions of R; E members kept"
+        }
+      },
+      "dataset": {
+        "sequence": "AACAGACCCGCAACAACCAACAACACCAAAGAAGAGUACACAAGUUGAAGACACAACACUUGAUCUGAAACAAGAAGUUUGUGCCUACUCAACAGCUUUGAAAGAGCACUUCCCAACGCUGCUAGUAGUCUUUGUUUUCUUCAGUGCUGUACUGUGAGAUUGCCCGGUGCAGCAGCAGUUGUAUUCUUUAUUAGCUU",
+        "length": 197,
+        "reagent": "DMS",
+        "conditions": {
+          "temperature_c": null,
+          "buffer": null,
+          "mg_mM": null,
+          "chemicals": []
+        },
+        "source_url": "https://rmdb.stanford.edu/detail/CSDE1_DMS_0000/",
+        "download_date": "2026-11-04T17:28:31+00:00",
+        "provenance": {
+          "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/CSDE1_DMS_0000.rdat",
+          "download_date": "2026-11-04T17:28:31+00:00",
+          "sha256": "fef0d9f44954e9678910bb25d66d1007deb237f2476a54e6233a6c2da2a074ab",
+          "path": "CSDE1_DMS_0000.rdat",
+          "sha256_now": "fef0d9f44954e9678910bb25d66d1007deb237f2476a54e6233a6c2da2a074ab"
+        },
+        "rdat_name": "Csde1_190_386"
+      },
+      "selection_and_masking": {
+        "selection": {
+          "annotation": {
+            "mutation": "WT"
+          }
+        },
+        "row": 1,
+        "row_annotations": {
+          "mutation": [
+            "WT"
+          ]
+        },
+        "n_constructs_in_file": 198,
+        "nan_in_source": [
+          4,
+          9,
+          30,
+          33,
+          35,
+          43,
+          46,
+          49,
+          59,
+          60,
+          61,
+          66,
+          73,
+          76,
+          80,
+          82,
+          85,
+          88,
+          92,
+          94,
+          99,
+          103,
+          105,
+          117,
+          120,
+          124,
+          127,
+          133,
+          143,
+          145,
+          148,
+          153,
+          155,
+          157,
+          161,
+          165,
+          166,
+          167,
+          168,
+          171,
+          174,
+          177,
+          180,
+          193
+        ],
+        "masked_indices_0based": [],
+        "mask_config": [],
+        "mask_reason": "No extra masking: positions without data are already NaN in the RDAT.",
+        "numbering": "source"
+      },
+      "models": {
+        "RNAfold": {
+          "model": "RNAfold",
+          "implementation": "ViennaRNA Python bindings (RNA.fold_compound.pf / bpp)",
+          "version": "2.7.2",
+          "temperature_c": 37.0,
+          "energy_params": "turner2004",
+          "salt_correction": false,
+          "salt_molar": 1.021,
+          "dangles": 2,
+          "can_represent": {
+            "temperature": true,
+            "monovalent_salt": true,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        },
+        "CONTRAfold": {
+          "model": "CONTRAfold",
+          "executable": "/home/ldibari/miniforge3/bin/contrafold",
+          "binary_sha256": "a1383b0f6589cce02fc1e5530223baed9f4b0bdce2a73af9ab353c2d59b86166",
+          "version": "CONTRAFold version 2.01 - RNA secondary structure prediction",
+          "conda_package_version": "2.02",
+          "posterior_threshold": 1e-05,
+          "params": "built-in default",
+          "temperature_c": null,
+          "can_represent": {
+            "temperature": false,
+            "monovalent_salt": false,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        },
+        "MXfold2": {
+          "model": "MXfold2",
+          "executable": "/home/ldibari/RNAIdea/EncoderDna/EncoderDna_env/bin/mxfold2",
+          "version": "0.1.2",
+          "param": "bundled default (TrainSetAB.conf, model MixC)",
+          "seed": 0,
+          "temperature_c": null,
+          "output_precision": "5 decimals per p_ij",
+          "can_represent": {
+            "temperature": false,
+            "monovalent_salt": false,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        }
+      },
+      "model_call_metadata": {
+        "RNAfold": {
+          "197": {
+            "ensemble_energy": -47.807701110839844,
+            "max_clip": 0.0
+          },
+          "50": {
+            "ensemble_energy": -1.7616490125656128,
+            "max_clip": 0.0
+          },
+          "60": {
+            "ensemble_energy": -2.7881503105163574,
+            "max_clip": 0.0
+          },
+          "70": {
+            "ensemble_energy": -4.860584735870361,
+            "max_clip": 0.0
+          },
+          "80": {
+            "ensemble_energy": -5.825958728790283,
+            "max_clip": 0.0
+          },
+          "90": {
+            "ensemble_energy": -11.222105026245117,
+            "max_clip": 0.0
+          },
+          "100": {
+            "ensemble_energy": -14.334096908569336,
+            "max_clip": 0.0
+          },
+          "110": {
+            "ensemble_energy": -16.627662658691406,
+            "max_clip": 0.0
+          },
+          "120": {
+            "ensemble_energy": -17.70270347595215,
+            "max_clip": 0.0
+          },
+          "130": {
+            "ensemble_energy": -20.987403869628906,
+            "max_clip": 0.0
+          },
+          "140": {
+            "ensemble_energy": -24.04290008544922,
+            "max_clip": 0.0
+          },
+          "150": {
+            "ensemble_energy": -28.930692672729492,
+            "max_clip": 0.0
+          },
+          "160": {
+            "ensemble_energy": -31.68206024169922,
+            "max_clip": 0.0
+          },
+          "170": {
+            "ensemble_energy": -36.58919906616211,
+            "max_clip": 0.0
+          },
+          "180": {
+            "ensemble_energy": -42.01430892944336,
+            "max_clip": 0.0
+          },
+          "190": {
+            "ensemble_energy": -47.59956741333008,
+            "max_clip": 0.0
+          }
+        },
+        "CONTRAfold": {
+          "197": {
+            "n_pairs_reported": 3473,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0019600000000000004
+          },
+          "50": {
+            "n_pairs_reported": 205,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0004900000000000001
+          },
+          "60": {
+            "n_pairs_reported": 288,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00059
+          },
+          "70": {
+            "n_pairs_reported": 475,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0006900000000000001
+          },
+          "80": {
+            "n_pairs_reported": 703,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00079
+          },
+          "90": {
+            "n_pairs_reported": 863,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0008900000000000001
+          },
+          "100": {
+            "n_pairs_reported": 1026,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00099
+          },
+          "110": {
+            "n_pairs_reported": 1236,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00109
+          },
+          "120": {
+            "n_pairs_reported": 1452,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00119
+          },
+          "130": {
+            "n_pairs_reported": 1738,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0012900000000000001
+          },
+          "140": {
+            "n_pairs_reported": 2277,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0013900000000000002
+          },
+          "150": {
+            "n_pairs_reported": 2557,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0014900000000000002
+          },
+          "160": {
+            "n_pairs_reported": 2865,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00159
+          },
+          "170": {
+            "n_pairs_reported": 3237,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00169
+          },
+          "180": {
+            "n_pairs_reported": 3246,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0017900000000000001
+          },
+          "190": {
+            "n_pairs_reported": 3289,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0018900000000000002
+          }
+        },
+        "MXfold2": {
+          "197": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.000985,
+            "max_asymmetry": 0.0
+          },
+          "50": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00025,
+            "max_asymmetry": 0.0
+          },
+          "60": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00030000000000000003,
+            "max_asymmetry": 0.0
+          },
+          "70": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00035000000000000005,
+            "max_asymmetry": 0.0
+          },
+          "80": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0004,
+            "max_asymmetry": 0.0
+          },
+          "90": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00045000000000000004,
+            "max_asymmetry": 0.0
+          },
+          "100": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0005,
+            "max_asymmetry": 0.0
+          },
+          "110": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00055,
+            "max_asymmetry": 0.0
+          },
+          "120": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0006000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "130": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0006500000000000001,
+            "max_asymmetry": 0.0
+          },
+          "140": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0007000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "150": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00075,
+            "max_asymmetry": 0.0
+          },
+          "160": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0008,
+            "max_asymmetry": 0.0
+          },
+          "170": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0008500000000000001,
+            "max_asymmetry": 0.0
+          },
+          "180": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0009000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "190": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0009500000000000001,
+            "max_asymmetry": 0.0
+          }
+        }
+      },
+      "condition_flags": [
+        "No temperature in the data annotations; RNAfold uses 37 \u00b0C (default)."
+      ],
+      "contrafold_threshold_check": {
+        "threshold": 1e-05,
+        "reference_threshold": 1e-09,
+        "windows": {
+          "50": {
+            "max_abs_du_all_positions": 0.0,
+            "rho_at_threshold": -0.13866396761133606,
+            "rho_at_reference": -0.13866396761133606,
+            "abs_rho_change": 0.0
+          },
+          "197": {
+            "max_abs_du_all_positions": 0.0,
+            "rho_at_threshold": 0.18582995951417003,
+            "rho_at_reference": 0.18582995951417003,
+            "abs_rho_change": 0.0
+          }
+        }
+      },
+      "suggested_windows": {
+        "RNAfold": {
+          "epsilon": 0.02,
+          "W_first": 120,
+          "W_stable": 197,
+          "W_ci": 197
+        },
+        "CONTRAfold": {
+          "epsilon": 0.02,
+          "W_first": 170,
+          "W_stable": 170,
+          "W_ci": 197
+        },
+        "MXfold2": {
+          "epsilon": 0.02,
+          "W_first": 170,
+          "W_stable": 197,
+          "W_ci": 197
+        }
+      },
+      "figures": [
+        "CSDE1_DMS_0000_fig_rho_vs_window.png",
+        "CSDE1_DMS_0000_fig_delta_rho_vs_window.png",
+        "CSDE1_DMS_0000_fig_convergence_vs_window.png",
+        "CSDE1_DMS_0000_fig_profile.png",
+        "CSDE1_DMS_0000_fig_du_heatmap.png",
+        "CSDE1_DMS_0000_fig_u_vs_reactivity.png"
+      ]
+    },
+    "HIV3PR_DMS_0001": {
+      "config_file": "config_HIV3PR_DMS_0001.json",
+      "config": {
+        "dataset_id": "HIV3PR_DMS_0001",
+        "source": {
+          "format": "rdat",
+          "path": "HIV3PR_DMS_0001.rdat",
+          "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/HIV3PR_DMS_0001.rdat",
+          "landing_page": "https://rmdb.stanford.edu/detail/HIV3PR_DMS_0001/"
+        },
+        "select": {
+          "annotation": {
+            "mutation": "WT"
+          }
+        },
+        "conditions": {
+          "temperature_c": 37,
+          "mg_mM": 10,
+          "note": "Copied from the RDAT ANNOTATION line; cross-checked against the file at run time."
+        },
+        "numbering": "source",
+        "mask": [
+          [
+            8932,
+            8964
+          ],
+          [
+            9173,
+            9192
+          ]
+        ],
+        "mask_reason": "8932-8964: suppressed reactivity, used for priming (RDAT comment says 8931-8964; 8932 is the first position in the file). 9173-9192: the appended 20-nt Tail2 primer-binding sequence.",
+        "region": [
+          8965,
+          9014
+        ],
+        "anchoring": "five_prime",
+        "window_grid": {
+          "step": 10
+        },
+        "epsilon": 0.02,
+        "evaluation_nucleotides": null,
+        "temperature_c": "from_dataset",
+        "bootstrap": {
+          "n_boot": 2000,
+          "block_length": 10,
+          "seed": 0
+        },
+        "models": {
+          "rnafold": {
+            "energy_params": "turner2004",
+            "salt_molar": null,
+            "dangles": 2
+          },
+          "contrafold": {
+            "executable": "/home/ldibari/miniforge3/bin/contrafold",
+            "posterior_threshold": 1e-05
+          },
+          "mxfold2": {
+            "executable": "mxfold2",
+            "param": null,
+            "seed": 0
+          }
+        },
+        "report_notes": {
+          "construct": "HIV-1 NL4-3 3' UTR (RDAT numbering = NL4-3 genome), DMS mutate-and-map, WT row; the version without the A20 tail (HIV3PR_DMS_0003/0004 add one).",
+          "region": "R = 8965-9014: the first 50 nt with data. The region of interest is the 5'-most stretch with data (uniform rule across datasets: first 50 nt, 100 nt for the 1266-nt HOXA9 UTR), with 5'-anchored windows mimicking the mRNA use case.",
+          "data_caveats": [
+            "Same buffer and temperature as TRP4P6_DMS_0007 (300 mM Na-cacodylate pH 7.0, 10 mM MgCl2, 37 \u00b0C)."
+          ],
+          "limitations": [
+            "The HIV-1 3' UTR is a viral mRNA region, not a cellular 5' UTR."
+          ]
+        }
+      },
+      "effective": {
+        "region_1based": [
+          34,
+          83
+        ],
+        "region_source": [
+          8965,
+          9014
+        ],
+        "anchoring": "five_prime",
+        "window_grid": [
+          83,
+          90,
+          100,
+          110,
+          120,
+          130,
+          140,
+          150,
+          160,
+          170,
+          180,
+          190,
+          200,
+          210,
+          220,
+          230,
+          240,
+          250,
+          260,
+          261
+        ],
+        "windows_1based": {
+          "83": [
+            1,
+            83
+          ],
+          "90": [
+            1,
+            90
+          ],
+          "100": [
+            1,
+            100
+          ],
+          "110": [
+            1,
+            110
+          ],
+          "120": [
+            1,
+            120
+          ],
+          "130": [
+            1,
+            130
+          ],
+          "140": [
+            1,
+            140
+          ],
+          "150": [
+            1,
+            150
+          ],
+          "160": [
+            1,
+            160
+          ],
+          "170": [
+            1,
+            170
+          ],
+          "180": [
+            1,
+            180
+          ],
+          "190": [
+            1,
+            190
+          ],
+          "200": [
+            1,
+            200
+          ],
+          "210": [
+            1,
+            210
+          ],
+          "220": [
+            1,
+            220
+          ],
+          "230": [
+            1,
+            230
+          ],
+          "240": [
+            1,
+            240
+          ],
+          "250": [
+            1,
+            250
+          ],
+          "260": [
+            1,
+            260
+          ],
+          "261": [
+            1,
+            261
+          ]
+        },
+        "evaluation_nucleotides": [
+          "A",
+          "C"
+        ],
+        "evaluation_nucleotides_source": "reagent mapping (DMS)",
+        "E_1based": [
+          34,
+          36,
+          37,
+          38,
+          39,
+          43,
+          44,
+          48,
+          49,
+          51,
+          57,
+          58,
+          62,
+          63,
+          64,
+          68,
+          71,
+          76,
+          77,
+          82
+        ],
+        "epsilon": 0.02,
+        "bootstrap": {
+          "n_boot": 2000,
+          "block_length_nt": 10,
+          "seed": 0,
+          "ci_level": 0.95,
+          "scheme": "paired circular block bootstrap over positions of R; E members kept"
+        }
+      },
+      "dataset": {
+        "sequence": "GGAGUACUUCAAGAACUGCUGACAUCGAGCUUGCUACAAGGGACUUUCCGCUGGGGACUUUCCAGGGAGGCGUGGCCUGGGCGGGACUGGGGAGUGGCGAGCCCUCAGAUGCUGCAUAUAAGCAGCUGCUUUUUGCCUGUACUGGGUCUCUCUGGUUAGACCAGAUCUGAGCCUGGGAGCUCUCUGGCUAACUAGGGAACCCACUGCUUAAGCCUCAAUAAAGCUUGCCUUGAGUGCUUCAAAAGAAACAACAACAACAAC",
+        "length": 261,
+        "reagent": "DMS",
+        "conditions": {
+          "temperature_c": 37.0,
+          "buffer": "Na-cacodylate:300mM(pH7.0)",
+          "mg_mM": 10.0,
+          "chemicals": [
+            "MgCl2:10mM",
+            "Na-cacodylate:300mM(pH7.0)"
+          ]
+        },
+        "source_url": "https://rmdb.stanford.edu/detail/HIV3PR_DMS_0001/",
+        "download_date": "2026-11-04T17:29:14+00:00",
+        "provenance": {
+          "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/HIV3PR_DMS_0001.rdat",
+          "download_date": "2026-11-04T17:29:14+00:00",
+          "sha256": "a9b0dcb7adae1d1fef70efc6c1d851f264a42eca995f704532a67b8f7e066d04",
+          "path": "HIV3PR_DMS_0001.rdat",
+          "sha256_now": "a9b0dcb7adae1d1fef70efc6c1d851f264a42eca995f704532a67b8f7e066d04"
+        },
+        "rdat_name": "HIV-1 3prime UTR (NL4-3)"
+      },
+      "selection_and_masking": {
+        "selection": {
+          "annotation": {
+            "mutation": "WT"
+          }
+        },
+        "row": 1,
+        "row_annotations": {
+          "reads": [
+            "398349"
+          ],
+          "mutation": [
+            "WT"
+          ]
+        },
+        "n_constructs_in_file": 262,
+        "nan_in_source": [],
+        "masked_indices_0based": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          241,
+          242,
+          243,
+          244,
+          245,
+          246,
+          247,
+          248,
+          249,
+          250,
+          251,
+          252,
+          253,
+          254,
+          255,
+          256,
+          257,
+          258,
+          259,
+          260
+        ],
+        "mask_config": [
+          [
+            8932,
+            8964
+          ],
+          [
+            9173,
+            9192
+          ]
+        ],
+        "mask_reason": "8932-8964: suppressed reactivity, used for priming (RDAT comment says 8931-8964; 8932 is the first position in the file). 9173-9192: the appended 20-nt Tail2 primer-binding sequence.",
+        "numbering": "source"
+      },
+      "models": {
+        "RNAfold": {
+          "model": "RNAfold",
+          "implementation": "ViennaRNA Python bindings (RNA.fold_compound.pf / bpp)",
+          "version": "2.7.2",
+          "temperature_c": 37.0,
+          "energy_params": "turner2004",
+          "salt_correction": false,
+          "salt_molar": 1.021,
+          "dangles": 2,
+          "can_represent": {
+            "temperature": true,
+            "monovalent_salt": true,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        },
+        "CONTRAfold": {
+          "model": "CONTRAfold",
+          "executable": "/home/ldibari/miniforge3/bin/contrafold",
+          "binary_sha256": "a1383b0f6589cce02fc1e5530223baed9f4b0bdce2a73af9ab353c2d59b86166",
+          "version": "CONTRAFold version 2.01 - RNA secondary structure prediction",
+          "conda_package_version": "2.02",
+          "posterior_threshold": 1e-05,
+          "params": "built-in default",
+          "temperature_c": null,
+          "can_represent": {
+            "temperature": false,
+            "monovalent_salt": false,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        },
+        "MXfold2": {
+          "model": "MXfold2",
+          "executable": "/home/ldibari/RNAIdea/EncoderDna/EncoderDna_env/bin/mxfold2",
+          "version": "0.1.2",
+          "param": "bundled default (TrainSetAB.conf, model MixC)",
+          "seed": 0,
+          "temperature_c": null,
+          "output_precision": "5 decimals per p_ij",
+          "can_represent": {
+            "temperature": false,
+            "monovalent_salt": false,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        }
+      },
+      "model_call_metadata": {
+        "RNAfold": {
+          "261": {
+            "ensemble_energy": -103.19538879394531,
+            "max_clip": 0.0
+          },
+          "83": {
+            "ensemble_energy": -22.540910720825195,
+            "max_clip": 0.0
+          },
+          "90": {
+            "ensemble_energy": -27.302576065063477,
+            "max_clip": 0.0
+          },
+          "100": {
+            "ensemble_energy": -32.80332946777344,
+            "max_clip": 0.0
+          },
+          "110": {
+            "ensemble_energy": -38.02199935913086,
+            "max_clip": 0.0
+          },
+          "120": {
+            "ensemble_energy": -42.446170806884766,
+            "max_clip": 0.0
+          },
+          "130": {
+            "ensemble_energy": -46.637184143066406,
+            "max_clip": 0.0
+          },
+          "140": {
+            "ensemble_energy": -47.948673248291016,
+            "max_clip": 0.0
+          },
+          "150": {
+            "ensemble_energy": -52.09012222290039,
+            "max_clip": 0.0
+          },
+          "160": {
+            "ensemble_energy": -57.93902587890625,
+            "max_clip": 0.0
+          },
+          "170": {
+            "ensemble_energy": -61.639259338378906,
+            "max_clip": 0.0
+          },
+          "180": {
+            "ensemble_energy": -66.7345199584961,
+            "max_clip": 0.0
+          },
+          "190": {
+            "ensemble_energy": -72.34549713134766,
+            "max_clip": 0.0
+          },
+          "200": {
+            "ensemble_energy": -79.70301818847656,
+            "max_clip": 0.0
+          },
+          "210": {
+            "ensemble_energy": -86.71548461914062,
+            "max_clip": 0.0
+          },
+          "220": {
+            "ensemble_energy": -87.96280670166016,
+            "max_clip": 0.0
+          },
+          "230": {
+            "ensemble_energy": -91.25072479248047,
+            "max_clip": 0.0
+          },
+          "240": {
+            "ensemble_energy": -101.56004333496094,
+            "max_clip": 0.0
+          },
+          "250": {
+            "ensemble_energy": -103.18672943115234,
+            "max_clip": 0.0
+          },
+          "260": {
+            "ensemble_energy": -103.19532012939453,
+            "max_clip": 0.0
+          }
+        },
+        "CONTRAfold": {
+          "261": {
+            "n_pairs_reported": 5411,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0026000000000000003
+          },
+          "83": {
+            "n_pairs_reported": 1254,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0008200000000000001
+          },
+          "90": {
+            "n_pairs_reported": 1389,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0008900000000000001
+          },
+          "100": {
+            "n_pairs_reported": 1654,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00099
+          },
+          "110": {
+            "n_pairs_reported": 1663,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00109
+          },
+          "120": {
+            "n_pairs_reported": 1668,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00119
+          },
+          "130": {
+            "n_pairs_reported": 2026,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0012900000000000001
+          },
+          "140": {
+            "n_pairs_reported": 2528,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0013900000000000002
+          },
+          "150": {
+            "n_pairs_reported": 3235,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0014900000000000002
+          },
+          "160": {
+            "n_pairs_reported": 3528,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00159
+          },
+          "170": {
+            "n_pairs_reported": 3758,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00169
+          },
+          "180": {
+            "n_pairs_reported": 4258,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0017900000000000001
+          },
+          "190": {
+            "n_pairs_reported": 4599,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0018900000000000002
+          },
+          "200": {
+            "n_pairs_reported": 4228,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00199
+          },
+          "210": {
+            "n_pairs_reported": 3377,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0020900000000000003
+          },
+          "220": {
+            "n_pairs_reported": 4084,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00219
+          },
+          "230": {
+            "n_pairs_reported": 4586,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0022900000000000004
+          },
+          "240": {
+            "n_pairs_reported": 4951,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00239
+          },
+          "250": {
+            "n_pairs_reported": 5198,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00249
+          },
+          "260": {
+            "n_pairs_reported": 5389,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0025900000000000003
+          }
+        },
+        "MXfold2": {
+          "261": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0013050000000000002,
+            "max_asymmetry": 0.0
+          },
+          "83": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00041500000000000006,
+            "max_asymmetry": 0.0
+          },
+          "90": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00045000000000000004,
+            "max_asymmetry": 0.0
+          },
+          "100": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0005,
+            "max_asymmetry": 0.0
+          },
+          "110": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00055,
+            "max_asymmetry": 0.0
+          },
+          "120": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0006000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "130": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0006500000000000001,
+            "max_asymmetry": 0.0
+          },
+          "140": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0007000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "150": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00075,
+            "max_asymmetry": 0.0
+          },
+          "160": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0008,
+            "max_asymmetry": 0.0
+          },
+          "170": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0008500000000000001,
+            "max_asymmetry": 0.0
+          },
+          "180": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0009000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "190": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0009500000000000001,
+            "max_asymmetry": 0.0
+          },
+          "200": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.001,
+            "max_asymmetry": 0.0
+          },
+          "210": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0010500000000000002,
+            "max_asymmetry": 0.0
+          },
+          "220": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0011,
+            "max_asymmetry": 0.0
+          },
+          "230": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0011500000000000002,
+            "max_asymmetry": 0.0
+          },
+          "240": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0012000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "250": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00125,
+            "max_asymmetry": 0.0
+          },
+          "260": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0013000000000000002,
+            "max_asymmetry": 0.0
+          }
+        }
+      },
+      "condition_flags": [
+        "10 mM Mg\u00b2\u207a in the experiment: no model represents Mg\u00b2\u207a or tertiary structure.",
+        "Experiment at 37 \u00b0C: RNAfold folds at 37 \u00b0C; CONTRAfold and MXfold2 have no temperature parameter.",
+        "Buffer Na-cacodylate:300mM(pH7.0): RNAfold uses standard 1.021 M monovalent salt (correction off); CONTRAfold/MXfold2 have no salt dependence."
+      ],
+      "contrafold_threshold_check": {
+        "threshold": 1e-05,
+        "reference_threshold": 1e-09,
+        "windows": {
+          "83": {
+            "max_abs_du_all_positions": 0.0,
+            "rho_at_threshold": 0.6360902255639098,
+            "rho_at_reference": 0.6360902255639098,
+            "abs_rho_change": 0.0
+          },
+          "261": {
+            "max_abs_du_all_positions": 0.0,
+            "rho_at_threshold": 0.831578947368421,
+            "rho_at_reference": 0.831578947368421,
+            "abs_rho_change": 0.0
+          }
+        }
+      },
+      "suggested_windows": {
+        "RNAfold": {
+          "epsilon": 0.02,
+          "W_first": 83,
+          "W_stable": 240,
+          "W_ci": 220
+        },
+        "CONTRAfold": {
+          "epsilon": 0.02,
+          "W_first": 220,
+          "W_stable": 220,
+          "W_ci": 240
+        },
+        "MXfold2": {
+          "epsilon": 0.02,
+          "W_first": 100,
+          "W_stable": 200,
+          "W_ci": 240
+        }
+      },
+      "figures": [
+        "HIV3PR_DMS_0001_fig_rho_vs_window.png",
+        "HIV3PR_DMS_0001_fig_delta_rho_vs_window.png",
+        "HIV3PR_DMS_0001_fig_convergence_vs_window.png",
+        "HIV3PR_DMS_0001_fig_profile.png",
+        "HIV3PR_DMS_0001_fig_du_heatmap.png",
+        "HIV3PR_DMS_0001_fig_u_vs_reactivity.png"
+      ]
+    },
+    "RNASEP_DMS_0000": {
+      "config_file": "config_RNASEP_DMS_0000.json",
+      "config": {
+        "dataset_id": "RNASEP_DMS_0000",
+        "source": {
+          "format": "rdat",
+          "path": "RNASEP_DMS_0000.rdat",
+          "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/RNASEP_DMS_0000.rdat",
+          "landing_page": "https://rmdb.stanford.edu/detail/RNASEP_DMS_0000/"
+        },
+        "select": {
+          "annotation": {
+            "mutation": "WT"
+          }
+        },
+        "conditions": {
+          "temperature_c": 37,
+          "mg_mM": 10,
+          "note": "Copied from the RDAT ANNOTATION line; cross-checked against the file at run time."
+        },
+        "numbering": "source",
+        "mask": [
+          [
+            1,
+            3
+          ]
+        ],
+        "mask_reason": "Leading run of 3 exact zeros at the 5' end (no data at the read end).",
+        "region": [
+          4,
+          53
+        ],
+        "anchoring": "five_prime",
+        "window_grid": {
+          "step": 10
+        },
+        "epsilon": 0.02,
+        "evaluation_nucleotides": null,
+        "temperature_c": "from_dataset",
+        "bootstrap": {
+          "n_boot": 2000,
+          "block_length": 10,
+          "seed": 0
+        },
+        "models": {
+          "rnafold": {
+            "energy_params": "turner2004",
+            "salt_molar": null,
+            "dangles": 2
+          },
+          "contrafold": {
+            "executable": "/home/ldibari/miniforge3/bin/contrafold",
+            "posterior_threshold": 1e-05
+          },
+          "mxfold2": {
+            "executable": "mxfold2",
+            "param": null,
+            "seed": 0
+          }
+        },
+        "report_notes": {
+          "construct": "RNase P catalytic domain, B. stearothermophilus (265 nt), DMS mutate-and-map (data of Homan et al., PNAS 2014, reanalysed with MaP2D), WT row of the 37 \u00b0C entry.",
+          "region": "R = 4-53: the first 50 nt with data. It contains the 5' strand of P1, whose partner is at the 3' end, so small windows cut it. The region of interest is the 5'-most stretch with data (uniform rule across datasets: first 50 nt, 100 nt for the 1266-nt HOXA9 UTR), with 5'-anchored windows mimicking the mRNA use case.",
+          "data_caveats": [],
+          "limitations": [
+            "RNase P is a structured ribozyme with Mg2+-dependent tertiary structure, not an mRNA."
+          ]
+        }
+      },
+      "effective": {
+        "region_1based": [
+          4,
+          53
+        ],
+        "region_source": [
+          4,
+          53
+        ],
+        "anchoring": "five_prime",
+        "window_grid": [
+          53,
+          60,
+          70,
+          80,
+          90,
+          100,
+          110,
+          120,
+          130,
+          140,
+          150,
+          160,
+          170,
+          180,
+          190,
+          200,
+          210,
+          220,
+          230,
+          240,
+          250,
+          260,
+          265
+        ],
+        "windows_1based": {
+          "53": [
+            1,
+            53
+          ],
+          "60": [
+            1,
+            60
+          ],
+          "70": [
+            1,
+            70
+          ],
+          "80": [
+            1,
+            80
+          ],
+          "90": [
+            1,
+            90
+          ],
+          "100": [
+            1,
+            100
+          ],
+          "110": [
+            1,
+            110
+          ],
+          "120": [
+            1,
+            120
+          ],
+          "130": [
+            1,
+            130
+          ],
+          "140": [
+            1,
+            140
+          ],
+          "150": [
+            1,
+            150
+          ],
+          "160": [
+            1,
+            160
+          ],
+          "170": [
+            1,
+            170
+          ],
+          "180": [
+            1,
+            180
+          ],
+          "190": [
+            1,
+            190
+          ],
+          "200": [
+            1,
+            200
+          ],
+          "210": [
+            1,
+            210
+          ],
+          "220": [
+            1,
+            220
+          ],
+          "230": [
+            1,
+            230
+          ],
+          "240": [
+            1,
+            240
+          ],
+          "250": [
+            1,
+            250
+          ],
+          "260": [
+            1,
+            260
+          ],
+          "265": [
+            1,
+            265
+          ]
+        },
+        "evaluation_nucleotides": [
+          "A",
+          "C"
+        ],
+        "evaluation_nucleotides_source": "reagent mapping (DMS)",
+        "E_1based": [
+          4,
+          5,
+          7,
+          8,
+          11,
+          13,
+          18,
+          19,
+          21,
+          23,
+          26,
+          29,
+          30,
+          36,
+          39,
+          40,
+          43,
+          45,
+          48,
+          49,
+          50,
+          53
+        ],
+        "epsilon": 0.02,
+        "bootstrap": {
+          "n_boot": 2000,
+          "block_length_nt": 10,
+          "seed": 0,
+          "ci_level": 0.95,
+          "scheme": "paired circular block bootstrap over positions of R; E members kept"
+        }
+      },
+      "dataset": {
+        "sequence": "GUUAAUCAUGCUCGGGUAAUCGCUGCGGCCGGUUUCGGCCGUAGAGGAAAGUCCAUGCUCGCACGGUGCUGAGAUGCCCGUAGUGUUCGUGGAAACACGAGCGAGAAACCCAAAUGAUGGUAGGGGCACCUUCCCGAAGGAAAUGAACGGAGGGAAGGACAGGCGGCGCAUGCAGCCUGUAGAUAGAUGAUUACCGCCGGAGUACGAGGCGCAAAGCCGCUUGCAGUACGAAGGUACAGAACAUGGCUUAUAGAGCAUGAUUAAC",
+        "length": 265,
+        "reagent": "DMS",
+        "conditions": {
+          "temperature_c": 37.0,
+          "buffer": "Na-cacodylate:300mM(pH7.0)",
+          "mg_mM": 10.0,
+          "chemicals": [
+            "Na-cacodylate:300mM(pH7.0)",
+            "MgCl2:10mM"
+          ]
+        },
+        "source_url": "https://rmdb.stanford.edu/detail/RNASEP_DMS_0000/",
+        "download_date": "2026-11-04T17:30:19+00:00",
+        "provenance": {
+          "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/RNASEP_DMS_0000.rdat",
+          "download_date": "2026-11-04T17:30:19+00:00",
+          "sha256": "4d90c0b47e7e5dc17cf2ded210c04dd922d315ae34a6187bfb3e83fd581c4d3c",
+          "path": "RNASEP_DMS_0000.rdat",
+          "sha256_now": "4d90c0b47e7e5dc17cf2ded210c04dd922d315ae34a6187bfb3e83fd581c4d3c"
+        },
+        "rdat_name": "Ribonuclease P catalytic domain, B. stearothermophilus"
+      },
+      "selection_and_masking": {
+        "selection": {
+          "annotation": {
+            "mutation": "WT"
+          }
+        },
+        "row": 1,
+        "row_annotations": {
+          "mutation": [
+            "WT"
+          ]
+        },
+        "n_constructs_in_file": 266,
+        "nan_in_source": [],
+        "masked_indices_0based": [
+          0,
+          1,
+          2
+        ],
+        "mask_config": [
+          [
+            1,
+            3
+          ]
+        ],
+        "mask_reason": "Leading run of 3 exact zeros at the 5' end (no data at the read end).",
+        "numbering": "source"
+      },
+      "models": {
+        "RNAfold": {
+          "model": "RNAfold",
+          "implementation": "ViennaRNA Python bindings (RNA.fold_compound.pf / bpp)",
+          "version": "2.7.2",
+          "temperature_c": 37.0,
+          "energy_params": "turner2004",
+          "salt_correction": false,
+          "salt_molar": 1.021,
+          "dangles": 2,
+          "can_represent": {
+            "temperature": true,
+            "monovalent_salt": true,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        },
+        "CONTRAfold": {
+          "model": "CONTRAfold",
+          "executable": "/home/ldibari/miniforge3/bin/contrafold",
+          "binary_sha256": "a1383b0f6589cce02fc1e5530223baed9f4b0bdce2a73af9ab353c2d59b86166",
+          "version": "CONTRAFold version 2.01 - RNA secondary structure prediction",
+          "conda_package_version": "2.02",
+          "posterior_threshold": 1e-05,
+          "params": "built-in default",
+          "temperature_c": null,
+          "can_represent": {
+            "temperature": false,
+            "monovalent_salt": false,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        },
+        "MXfold2": {
+          "model": "MXfold2",
+          "executable": "/home/ldibari/RNAIdea/EncoderDna/EncoderDna_env/bin/mxfold2",
+          "version": "0.1.2",
+          "param": "bundled default (TrainSetAB.conf, model MixC)",
+          "seed": 0,
+          "temperature_c": null,
+          "output_precision": "5 decimals per p_ij",
+          "can_represent": {
+            "temperature": false,
+            "monovalent_salt": false,
+            "mg2+": false,
+            "tertiary_structure": false
+          }
+        }
+      },
+      "model_call_metadata": {
+        "RNAfold": {
+          "265": {
+            "ensemble_energy": -116.97290802001953,
+            "max_clip": 0.0
+          },
+          "53": {
+            "ensemble_energy": -19.40714454650879,
+            "max_clip": 0.0
+          },
+          "60": {
+            "ensemble_energy": -23.79962921142578,
+            "max_clip": 0.0
+          },
+          "70": {
+            "ensemble_energy": -26.083030700683594,
+            "max_clip": 0.0
+          },
+          "80": {
+            "ensemble_energy": -31.37722396850586,
+            "max_clip": 0.0
+          },
+          "90": {
+            "ensemble_energy": -35.76341247558594,
+            "max_clip": 0.0
+          },
+          "100": {
+            "ensemble_energy": -41.68912887573242,
+            "max_clip": 0.0
+          },
+          "110": {
+            "ensemble_energy": -49.50706481933594,
+            "max_clip": 0.0
+          },
+          "120": {
+            "ensemble_energy": -50.53623962402344,
+            "max_clip": 0.0
+          },
+          "130": {
+            "ensemble_energy": -53.21342849731445,
+            "max_clip": 0.0
+          },
+          "140": {
+            "ensemble_energy": -56.35079574584961,
+            "max_clip": 0.0
+          },
+          "150": {
+            "ensemble_energy": -57.500247955322266,
+            "max_clip": 0.0
+          },
+          "160": {
+            "ensemble_energy": -66.60787200927734,
+            "max_clip": 0.0
+          },
+          "170": {
+            "ensemble_energy": -67.72087860107422,
+            "max_clip": 0.0
+          },
+          "180": {
+            "ensemble_energy": -78.5329360961914,
+            "max_clip": 0.0
+          },
+          "190": {
+            "ensemble_energy": -79.83935546875,
+            "max_clip": 0.0
+          },
+          "200": {
+            "ensemble_energy": -84.23977661132812,
+            "max_clip": 0.0
+          },
+          "210": {
+            "ensemble_energy": -88.92159271240234,
+            "max_clip": 0.0
+          },
+          "220": {
+            "ensemble_energy": -93.48818969726562,
+            "max_clip": 0.0
+          },
+          "230": {
+            "ensemble_energy": -94.56814575195312,
+            "max_clip": 0.0
+          },
+          "240": {
+            "ensemble_energy": -98.40507507324219,
+            "max_clip": 0.0
+          },
+          "250": {
+            "ensemble_energy": -102.18946075439453,
+            "max_clip": 0.0
+          },
+          "260": {
+            "ensemble_energy": -110.51187133789062,
+            "max_clip": 0.0
+          }
+        },
+        "CONTRAfold": {
+          "265": {
+            "n_pairs_reported": 4280,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0026400000000000004
+          },
+          "53": {
+            "n_pairs_reported": 294,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0005200000000000001
+          },
+          "60": {
+            "n_pairs_reported": 365,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00059
+          },
+          "70": {
+            "n_pairs_reported": 586,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0006900000000000001
+          },
+          "80": {
+            "n_pairs_reported": 877,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00079
+          },
+          "90": {
+            "n_pairs_reported": 1079,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0008900000000000001
+          },
+          "100": {
+            "n_pairs_reported": 1208,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00099
+          },
+          "110": {
+            "n_pairs_reported": 1408,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00109
+          },
+          "120": {
+            "n_pairs_reported": 1655,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00119
+          },
+          "130": {
+            "n_pairs_reported": 1949,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0012900000000000001
+          },
+          "140": {
+            "n_pairs_reported": 2254,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0013900000000000002
+          },
+          "150": {
+            "n_pairs_reported": 2531,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0014900000000000002
+          },
+          "160": {
+            "n_pairs_reported": 2221,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00159
+          },
+          "170": {
+            "n_pairs_reported": 2573,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00169
+          },
+          "180": {
+            "n_pairs_reported": 2471,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0017900000000000001
+          },
+          "190": {
+            "n_pairs_reported": 2834,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0018900000000000002
+          },
+          "200": {
+            "n_pairs_reported": 3228,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00199
+          },
+          "210": {
+            "n_pairs_reported": 3397,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0020900000000000003
+          },
+          "220": {
+            "n_pairs_reported": 3791,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00219
+          },
+          "230": {
+            "n_pairs_reported": 4115,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0022900000000000004
+          },
+          "240": {
+            "n_pairs_reported": 4318,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00239
+          },
+          "250": {
+            "n_pairs_reported": 4696,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.00249
+          },
+          "260": {
+            "n_pairs_reported": 4522,
+            "max_clip": 0.0,
+            "max_threshold_bias_bound": 0.0025900000000000003
+          }
+        },
+        "MXfold2": {
+          "265": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.001325,
+            "max_asymmetry": 0.0
+          },
+          "53": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00026500000000000004,
+            "max_asymmetry": 0.0
+          },
+          "60": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00030000000000000003,
+            "max_asymmetry": 0.0
+          },
+          "70": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00035000000000000005,
+            "max_asymmetry": 0.0
+          },
+          "80": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0004,
+            "max_asymmetry": 0.0
+          },
+          "90": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00045000000000000004,
+            "max_asymmetry": 0.0
+          },
+          "100": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0005,
+            "max_asymmetry": 0.0
+          },
+          "110": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00055,
+            "max_asymmetry": 0.0
+          },
+          "120": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0006000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "130": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0006500000000000001,
+            "max_asymmetry": 0.0
+          },
+          "140": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0007000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "150": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00075,
+            "max_asymmetry": 0.0
+          },
+          "160": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0008,
+            "max_asymmetry": 0.0
+          },
+          "170": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0008500000000000001,
+            "max_asymmetry": 0.0
+          },
+          "180": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0009000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "190": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0009500000000000001,
+            "max_asymmetry": 0.0
+          },
+          "200": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.001,
+            "max_asymmetry": 0.0
+          },
+          "210": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0010500000000000002,
+            "max_asymmetry": 0.0
+          },
+          "220": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0011,
+            "max_asymmetry": 0.0
+          },
+          "230": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0011500000000000002,
+            "max_asymmetry": 0.0
+          },
+          "240": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0012000000000000001,
+            "max_asymmetry": 0.0
+          },
+          "250": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.00125,
+            "max_asymmetry": 0.0
+          },
+          "260": {
+            "max_clip": 0.0,
+            "rounding_bound": 0.0013000000000000002,
+            "max_asymmetry": 0.0
+          }
+        }
+      },
+      "condition_flags": [
+        "10 mM Mg\u00b2\u207a in the experiment: no model represents Mg\u00b2\u207a or tertiary structure.",
+        "Experiment at 37 \u00b0C: RNAfold folds at 37 \u00b0C; CONTRAfold and MXfold2 have no temperature parameter.",
+        "Buffer Na-cacodylate:300mM(pH7.0): RNAfold uses standard 1.021 M monovalent salt (correction off); CONTRAfold/MXfold2 have no salt dependence."
+      ],
+      "contrafold_threshold_check": {
+        "threshold": 1e-05,
+        "reference_threshold": 1e-09,
+        "windows": {
+          "53": {
+            "max_abs_du_all_positions": 0.0,
+            "rho_at_threshold": 0.14285714285714288,
+            "rho_at_reference": 0.14285714285714288,
+            "abs_rho_change": 0.0
+          },
+          "265": {
+            "max_abs_du_all_positions": 0.0,
+            "rho_at_threshold": 0.6758893280632412,
+            "rho_at_reference": 0.6758893280632412,
+            "abs_rho_change": 0.0
+          }
+        }
+      },
+      "suggested_windows": {
+        "RNAfold": {
+          "epsilon": 0.02,
+          "W_first": 265,
+          "W_stable": 265,
+          "W_ci": 265
+        },
+        "CONTRAfold": {
+          "epsilon": 0.02,
+          "W_first": 265,
+          "W_stable": 265,
+          "W_ci": 265
+        },
+        "MXfold2": {
+          "epsilon": 0.02,
+          "W_first": 265,
+          "W_stable": 265,
+          "W_ci": 265
+        }
+      },
+      "figures": [
+        "RNASEP_DMS_0000_fig_rho_vs_window.png",
+        "RNASEP_DMS_0000_fig_delta_rho_vs_window.png",
+        "RNASEP_DMS_0000_fig_convergence_vs_window.png",
+        "RNASEP_DMS_0000_fig_profile.png",
+        "RNASEP_DMS_0000_fig_du_heatmap.png",
+        "RNASEP_DMS_0000_fig_u_vs_reactivity.png"
+      ]
+    }
+  },
+  "cross_dataset_wilcoxon": [
+    {
+      "model": "CONTRAfold",
+      "W": 100,
+      "n_datasets": 6,
+      "median_delta_rho": 0.03573789807070945,
+      "wilcoxon_p": 0.6875
+    },
+    {
+      "model": "CONTRAfold",
+      "W": 150,
+      "n_datasets": 6,
+      "median_delta_rho": -0.006928224022577631,
+      "wilcoxon_p": 0.84375
+    },
+    {
+      "model": "MXfold2",
+      "W": 100,
+      "n_datasets": 6,
+      "median_delta_rho": 0.008016756562874344,
+      "wilcoxon_p": 0.6875
+    },
+    {
+      "model": "MXfold2",
+      "W": 150,
+      "n_datasets": 6,
+      "median_delta_rho": 0.006334828971618939,
+      "wilcoxon_p": 1.0
+    },
+    {
+      "model": "RNAfold",
+      "W": 100,
+      "n_datasets": 6,
+      "median_delta_rho": 0.001082498736960924,
+      "wilcoxon_p": 0.84375
+    },
+    {
+      "model": "RNAfold",
+      "W": 150,
+      "n_datasets": 6,
+      "median_delta_rho": -0.07749115872685663,
+      "wilcoxon_p": 1.0
+    }
+  ],
+  "overview_figures": [
+    "overview_delta_rho.png",
+    "overview_convergence.png",
+    "overview_relative_window.png",
+    "overview_summary.png"
+  ],
+  "run_finished_utc": "2026-11-04T18:46:36+00:00",
+  "pip_freeze": [
+    "argcomplete==3.7.2",
+    "argh==0.31.3",
+    "ast_serialize==0.12.1",
+    "asttokens==3.0.2",
+    "biopython==1.88",
+    "cmake==4.4.4",
+    "comm==0.2.3",
+    "contourpy==1.3.3",
+    "cuda-bindings==13.3.1",
+    "cuda-pathfinder==1.7.0",
+    "cuda-toolkit==13.0.3.0",
+    "cupy-cuda11x==13.6.0",
+    "cupy-cuda12x==14.2.0",
+    "cycler==0.12.1",
+    "debugpy==1.8.21",
+    "decorator==5.3.1",
+    "-e git+https://github.com/RNAIdea/EncoderDna.git@225a5d7960424a1addb8769877830db18ba7f758#egg=encoderdna",
+    "executing==2.2.1",
+    "fastrlock==0.8.3",
+    "filelock==3.32.4",
+    "fonttools==4.63.0",
+    "fsspec==2026.7.0",
+    "gffutils==0.14",
+    "h5py==3.16.0",
+    "iniconfig==2.3.0",
+    "ipykernel==7.3.0",
+    "ipython==9.15.0",
+    "ipython_pygments_lexers==1.1.1",
+    "jedi==0.20.0",
+    "Jinja2==3.1.6",
+    "joblib==1.5.3",
+    "jupyter_client==8.9.1",
+    "jupyter_core==5.9.1",
+    "kiwisolver==1.5.0",
+    "librt==0.16.0",
+    "LinearFold==1.1",
+    "mappy==2.31",
+    "MarkupSafe==3.0.3",
+    "matplotlib==3.11.1",
+    "matplotlib-inline==0.2.2",
+    "mpmath==1.3.0",
+    "mxfold2 @ git+https://github.com/mxfold/mxfold2.git@51b213676708bebd664f0c40873a46e09353e1ee",
+    "mypy==2.4.0",
+    "mypy_extensions==1.1.0",
+    "narwhals==2.25.0",
+    "nest-asyncio2==1.7.2",
+    "networkx==3.6.1",
+    "numpy==2.5.1",
+    "nvidia-cublas==13.1.1.3",
+    "nvidia-cuda-cupti==13.0.85",
+    "nvidia-cuda-nvrtc==13.0.88",
+    "nvidia-cuda-runtime==13.0.96",
+    "nvidia-cudnn-cu13==9.20.0.48",
+    "nvidia-cufft==12.0.0.61",
+    "nvidia-cufile==1.15.1.6",
+    "nvidia-curand==10.4.0.35",
+    "nvidia-cusolver==12.0.4.66",
+    "nvidia-cusparse==12.6.3.3",
+    "nvidia-cusparselt-cu13==0.8.1",
+    "nvidia-nccl-cu13==2.29.7",
+    "nvidia-nvjitlink==13.3.33",
+    "nvidia-nvshmem-cu13==3.4.5",
+    "nvidia-nvtx==13.0.85",
+    "openspliceai==0.0.7",
+    "packaging==26.2",
+    "pandas==3.0.3",
+    "parso==0.8.7",
+    "pathspec==1.1.1",
+    "pexpect==4.9.0",
+    "pillow==12.3.0",
+    "platformdirs==4.11.0",
+    "pluggy==1.6.0",
+    "prompt_toolkit==3.0.52",
+    "psutil==7.2.2",
+    "ptyprocess==0.7.0",
+    "pure_eval==0.2.3",
+    "pybind11==3.1.0",
+    "pyfaidx==0.9.0.4",
+    "Pygments==2.20.0",
+    "pyparsing==3.3.2",
+    "pysam==0.24.0",
+    "pytest==9.1.1",
+    "python-dateutil==2.9.0.post0",
+    "pyzmq==27.1.0",
+    "ruff==0.16.10",
+    "scikit-learn==1.9.0",
+    "scipy==1.18.1",
+    "seaborn==0.13.2",
+    "setuptools==84.0.0",
+    "simplejson==4.1.1",
+    "six==1.17.0",
+    "stack-data==0.6.3",
+    "sympy==1.14.0",
+    "threadpoolctl==3.6.0",
+    "torch==2.13.0",
+    "tornado==6.5.7",
+    "tqdm==4.69.0",
+    "traitlets==5.15.1",
+    "triton==3.7.1",
+    "typing_extensions==4.16.0",
+    "ViennaRNA==2.7.2",
+    "wcwidth==0.8.2",
+    "wheel==0.48.0"
+  ]
+}

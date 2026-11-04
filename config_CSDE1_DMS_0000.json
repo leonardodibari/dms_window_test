@@ -1,0 +1,61 @@
+{
+  "dataset_id": "CSDE1_DMS_0000",
+  "source": {
+    "format": "rdat",
+    "path": "CSDE1_DMS_0000.rdat",
+    "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/CSDE1_DMS_0000.rdat",
+    "landing_page": "https://rmdb.stanford.edu/detail/CSDE1_DMS_0000/"
+  },
+  "select": {
+    "annotation": {
+      "mutation": "WT"
+    }
+  },
+  "conditions": {
+    "note": "Copied from the RDAT ANNOTATION line; cross-checked against the file at run time."
+  },
+  "numbering": "source",
+  "mask": [],
+  "mask_reason": "No extra masking: positions without data are already NaN in the RDAT.",
+  "region": [
+    1,
+    50
+  ],
+  "anchoring": "five_prime",
+  "window_grid": {
+    "step": 10
+  },
+  "epsilon": 0.02,
+  "evaluation_nucleotides": null,
+  "temperature_c": "from_dataset",
+  "bootstrap": {
+    "n_boot": 2000,
+    "block_length": 10,
+    "seed": 0
+  },
+  "models": {
+    "rnafold": {
+      "energy_params": "turner2004",
+      "salt_molar": null,
+      "dangles": 2
+    },
+    "contrafold": {
+      "executable": "/home/ldibari/miniforge3/bin/contrafold",
+      "posterior_threshold": 1e-05
+    },
+    "mxfold2": {
+      "executable": "mxfold2",
+      "param": null,
+      "seed": 0
+    }
+  },
+  "report_notes": {
+    "construct": "Csde1 mRNA fragment, nucleotides 190-386 (RMDB name 'Csde1_190_386'), DMS mutate-and-map; only the WT row is used (CSDE1_DMS_0001 is a second entry of the same design with fewer data points).",
+    "region": "R = 1-50: the 5' end of the fragment. The region of interest is the 5'-most stretch with data (uniform rule across datasets: first 50 nt, 100 nt for the 1266-nt HOXA9 UTR), with 5'-anchored windows mimicking the mRNA use case.",
+    "data_caveats": [
+      "The RDAT annotations give no temperature, buffer or Mg2+; RNAfold uses 37 \u00b0C (default) and this is flagged.",
+      "This is an internal fragment of the mRNA, so the 'full fold' is itself a truncation of the natural transcript."
+    ],
+    "limitations": []
+  }
+}
