@@ -323,8 +323,8 @@ def make_all(res: DatasetResult, outdir: Path, prefix: str = "") -> list[str]:
 # Overview figures across datasets
 # --------------------------------------------------------------------------- #
 # Categorical slots for datasets (fixed order), plus a marker each.
-DATASET_COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300"]
-DATASET_MARKERS = ["o", "s", "^", "D", "v", "P"]
+DATASET_COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"]
+DATASET_MARKERS = ["o", "s", "^", "D", "v", "P", "X", "h"]
 
 
 def _grid(n_panels: int, ncols: int = 3) -> tuple[plt.Figure, np.ndarray]:
@@ -406,8 +406,8 @@ def overview_relative(results: list[DatasetResult], path: Path) -> None:
             d = _rows(res, name)
             rel = d["W"] / res.dataset.n
             st = {
-                "color": DATASET_COLORS[k % 6],
-                "marker": DATASET_MARKERS[k % 6],
+                "color": DATASET_COLORS[k % len(DATASET_COLORS)],
+                "marker": DATASET_MARKERS[k % len(DATASET_COLORS)],
                 "markersize": 3.5,
                 "lw": 1.5,
             }

@@ -14,11 +14,15 @@ from __future__ import annotations
 
 import csv
 import datetime as _dt
+import gzip
 import hashlib
 import json
 import re
+import struct
+import tarfile
 import urllib.request
 import warnings
+import zlib
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -534,8 +538,206 @@ def load_table(path: Path, **opts: Any) -> list[Dataset]:
     return out
 
 
+# --------------------------------------------------------------------------- #
+# bigWig + FASTA loader (genome-coordinate tracks, e.g. RASP2)
+# --------------------------------------------------------------------------- #
+_BW_MAGIC = 0x888FFC26
+_BPT_MAGIC = 0x78CA8C91
+_CIR_MAGIC = 0x2468ACE0
+
+
+def _unwrap_single_member(path: Path, suffixes: tuple[str, ...]) -> bytes:
+    """Return the file bytes; a tar archive holding exactly one matching member is unwrapped."""
+    if tarfile.is_tarfile(path):
+        with tarfile.open(path) as tar:
+            members = [m for m in tar.getmembers() if m.isfile() and m.name.endswith(suffixes)]
+            if len(members) != 1:
+                raise ValueError(f"{path}: expected one {suffixes} member in the tar, found {len(members)}.")
+            fh = tar.extractfile(members[0])
+            assert fh is not None
+            return fh.read()
+    return path.read_bytes()
+
+
+def read_bigwig(path: Path) -> dict[str, list[tuple[int, int, float]]]:
+    """Read every interval of a bigWig file (pure Python, no pyBigWig needed).
+
+    Returns ``{chrom: [(start0, end0, value), ...]}`` with 0-based half-open
+    coordinates, as stored in the file. Intended for small targeted tracks.
+    """
+    buf = _unwrap_single_member(Path(path), (".bw", ".bigwig", ".bigWig"))
+    if struct.unpack_from("<I", buf, 0)[0] == _BW_MAGIC:
+        e = "<"
+    elif struct.unpack_from(">I", buf, 0)[0] == _BW_MAGIC:
+        e = ">"
+    else:
+        raise ValueError(f"{path}: not a bigWig file.")
+    (_, _, _, chrom_tree, _, index_off, _, _, _, _, uncompress) = struct.unpack_from(
+        e + "IHHQQQHHQQI", buf, 0
+    )
+
+    # chromosome B+ tree
+    magic, _, key_size, _, _ = struct.unpack_from(e + "IIIIQ", buf, chrom_tree)
+    if magic != _BPT_MAGIC:
+        raise ValueError(f"{path}: bad chromosome tree.")
+    names: dict[int, str] = {}
+
+    def walk_bpt(off: int) -> None:
+        is_leaf, _, count = struct.unpack_from(e + "BBH", buf, off)
+        off += 4
+        for _ in range(count):
+            key = buf[off : off + key_size].rstrip(b"\0").decode()
+            off += key_size
+            if is_leaf:
+                cid, _ = struct.unpack_from(e + "II", buf, off)
+                names[cid] = key
+                off += 8
+            else:
+                (child,) = struct.unpack_from(e + "Q", buf, off)
+                walk_bpt(child)
+                off += 8
+
+    walk_bpt(chrom_tree + 32)
+
+    # R-tree index -> data blocks
+    if struct.unpack_from(e + "I", buf, index_off)[0] != _CIR_MAGIC:
+        raise ValueError(f"{path}: bad R-tree index.")
+    blocks: list[tuple[int, int]] = []
+
+    def walk_rtree(off: int) -> None:
+        is_leaf, _, count = struct.unpack_from(e + "BBH", buf, off)
+        off += 4
+        for _ in range(count):
+            if is_leaf:
+                data_off, size = struct.unpack_from(e + "QQ", buf, off + 16)
+                blocks.append((data_off, size))
+                off += 32
+            else:
+                (child,) = struct.unpack_from(e + "Q", buf, off + 16)
+                walk_rtree(child)
+                off += 24
+
+    walk_rtree(index_off + 48)
+
+    out: dict[str, list[tuple[int, int, float]]] = {}
+    for data_off, size in blocks:
+        raw = buf[data_off : data_off + size]
+        block = zlib.decompress(raw) if uncompress else raw
+        p = 0
+        while p < len(block):
+            cid, cstart, _, step, span, typ, _, n = struct.unpack_from(e + "IIIIIBBH", block, p)
+            p += 24
+            ivs = out.setdefault(names[cid], [])
+            for k in range(n):
+                if typ == 1:  # bedGraph
+                    s, t, v = struct.unpack_from(e + "IIf", block, p)
+                    p += 12
+                elif typ == 2:  # varStep
+                    s, v = struct.unpack_from(e + "If", block, p)
+                    t = s + span
+                    p += 8
+                elif typ == 3:  # fixedStep
+                    (v,) = struct.unpack_from(e + "f", block, p)
+                    s = cstart + k * step
+                    t = s + span
+                    p += 4
+                else:
+                    raise ValueError(f"{path}: unknown bigWig section type {typ}.")
+                ivs.append((s, t, float(v)))
+    return out
+
+
+def read_fasta(path: Path) -> dict[str, str]:
+    """Read a (optionally gzipped) FASTA file; record IDs are the first word of the header."""
+    raw = Path(path).read_bytes()
+    text = (gzip.decompress(raw) if raw[:2] == b"\x1f\x8b" else raw).decode()
+    seqs: dict[str, list[str]] = {}
+    cur: list[str] | None = None
+    for line in text.splitlines():
+        if line.startswith(">"):
+            cur = seqs.setdefault(line[1:].split()[0], [])
+        elif cur is not None:
+            cur.append(line.strip())
+    return {k: "".join(v) for k, v in seqs.items()}
+
+
+_COMPLEMENT = str.maketrans("ACGU", "UGCA")
+
+
+def load_bigwig(path: Path, **opts: Any) -> list[Dataset]:
+    """Load one RNA from a genome-coordinate bigWig track plus a FASTA reference.
+
+    Options
+    -------
+    fasta : path to the reference FASTA (gz allowed) — required.
+    chrom : chromosome / segment name — required.
+    start, end : 1-based inclusive genome coordinates of the RNA (default:
+        the whole chromosome).
+    strand : ``"+"`` (default) or ``"-"`` (sequence and profile reversed and
+        complemented, so index 0 is always the RNA 5' end).
+    reagent, temperature_c, mg_mM, buffer : as for the table loader.
+    name : display name of the RNA (default: the genome region).
+    zero_as_missing : if true, stored values of exactly 0 become NaN.
+
+    Positions not covered by any interval are NaN. ``source_positions`` holds
+    the genome coordinate of each nucleotide.
+    """
+    fasta = opts.get("fasta")
+    chrom = opts.get("chrom")
+    if fasta is None or chrom is None:
+        raise ValueError("bigwig loader needs 'fasta' and 'chrom' in loader_options.")
+    genome = read_fasta(Path(fasta))
+    if chrom not in genome:
+        raise ValueError(f"Chromosome {chrom!r} not in {fasta}; available: {sorted(genome)[:20]}")
+    full = genome[chrom]
+    start = int(opts.get("start", 1))
+    end = int(opts.get("end", len(full)))
+    if not 1 <= start <= end <= len(full):
+        raise ValueError(f"Region {chrom}:{start}-{end} outside 1..{len(full)}.")
+    seq = normalize_sequence(full[start - 1 : end])
+    prof = np.full(end - start + 1, np.nan)
+    for s, t, v in read_bigwig(Path(path)).get(chrom, []):
+        lo, hi = max(s, start - 1), min(t, end)
+        if lo < hi:
+            prof[lo - (start - 1) : hi - (start - 1)] = v
+    if opts.get("zero_as_missing"):
+        prof[prof == 0] = np.nan
+    pos = np.arange(start, end + 1, dtype=np.int64)
+    strand = opts.get("strand", "+")
+    if strand == "-":
+        seq = seq.translate(_COMPLEMENT)[::-1]
+        prof, pos = prof[::-1].copy(), pos[::-1].copy()
+    elif strand != "+":
+        raise ValueError(f"strand must be '+' or '-', got {strand!r}.")
+    cond = Conditions(
+        temperature_c=opts.get("temperature_c"), buffer=opts.get("buffer"), mg_mm=opts.get("mg_mM")
+    )
+    return [
+        Dataset(
+            dataset_id=f"{Path(path).stem}:{chrom}:{start}-{end}{strand}",
+            sequence=seq,
+            reactivity=prof,
+            reagent=opts.get("reagent"),
+            conditions=cond,
+            source_positions=pos,
+            metadata={
+                "format": "bigwig",
+                "construct": chrom,
+                "annotations": {},
+                "genome_region": f"{chrom}:{start}-{end}({strand})",
+                "name": opts.get("name") or f"{chrom}:{start}-{end}({strand})",
+            },
+        )
+    ]
+
+
 Loader = Callable[..., list[Dataset]]
-LOADERS: dict[str, Loader] = {"rdat": load_rdat, "csv": load_table, "tsv": load_table}
+LOADERS: dict[str, Loader] = {
+    "rdat": load_rdat,
+    "csv": load_table,
+    "tsv": load_table,
+    "bigwig": load_bigwig,
+}
 
 
 def load(fmt: str, path: Path, **opts: Any) -> list[Dataset]:

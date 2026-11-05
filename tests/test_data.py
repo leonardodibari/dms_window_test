@@ -153,3 +153,59 @@ def test_all_nan_error() -> None:
 def test_mask_sets_nan() -> None:
     ds = dd.Dataset("x", "ACACACAC", np.ones(8), reagent="DMS").with_mask([6, 7])
     assert np.isnan(ds.reactivity[6:]).all() and ds.metadata["masked_indices"] == [6, 7]
+
+
+# ---- bigWig + FASTA loader ------------------------------------------------- #
+def _write_bigwig(path: Path, chrom: str, chrom_len: int, ivs: list[tuple[int, int, float]]) -> None:
+    """Write a minimal uncompressed little-endian bigWig (one chrom, one bedGraph section)."""
+    import struct
+
+    key = chrom.encode()
+    hdr_len, bpt_len = 64, 32 + 4 + len(key) + 8
+    data = struct.pack("<IIIIIBBH", 0, ivs[0][0], ivs[-1][1], 0, 0, 1, 0, len(ivs))
+    data += b"".join(struct.pack("<IIf", s, t, v) for s, t, v in ivs)
+    data_off = hdr_len + bpt_len
+    full_data = struct.pack("<I", 1) + data
+    index_off = data_off + len(full_data)
+    block_off = data_off + 4
+    header = struct.pack("<IHHQQQHHQQI8x", 0x888FFC26, 4, 0, hdr_len, data_off, index_off, 0, 0, 0, 0, 0)
+    bpt = struct.pack("<IIIIQ8x", 0x78CA8C91, 1, len(key), 8, 1)
+    bpt += struct.pack("<BBH", 1, 0, 1) + key + struct.pack("<II", 0, chrom_len)
+    cir = struct.pack("<IIQIIIIQII", 0x2468ACE0, 1, 1, 0, ivs[0][0], 0, ivs[-1][1], index_off, 1, 0)
+    cir += struct.pack("<BBH", 1, 0, 1) + struct.pack(
+        "<IIIIQQ", 0, ivs[0][0], 0, ivs[-1][1], block_off, len(data)
+    )
+    path.write_bytes(header + bpt + full_data + cir)
+
+
+def test_bigwig_loader(tmp_path: Path) -> None:
+    import tarfile
+
+    fa = tmp_path / "g.fa"
+    fa.write_text(">chrA desc\nGGGACGUACG\nUUUU\n>chrB\nAAAA\n")
+    bw = tmp_path / "t.bw"
+    _write_bigwig(bw, "chrA", 14, [(2, 3, 0.5), (3, 6, 1.0), (8, 9, 0.0)])
+    assert dd.read_bigwig(bw) == {"chrA": [(2, 3, 0.5), (3, 6, 1.0), (8, 9, 0.0)]}
+    # tar-wrapped download (as served by RASP2) is unwrapped transparently
+    tw = tmp_path / "wrapped.bw"
+    with tarfile.open(tw, "w") as tar:
+        tar.add(bw, arcname="inner/track.bw")
+    ds = dd.load("bigwig", tw, fasta=str(fa), chrom="chrA", start=2, end=10, reagent="DMS")[0]
+    assert ds.sequence == "GGACGUACG" and ds.n == 9
+    assert ds.source_positions is not None and ds.source_positions.tolist() == list(range(2, 11))
+    r = ds.reactivity  # genome 3 -> 0.5, 4-6 -> 1.0, 9 -> 0.0, others NaN
+    assert np.isnan(r[0]) and r[1] == 0.5 and r[2:5].tolist() == [1.0, 1.0, 1.0]
+    assert np.isnan(r[5]) and r[7] == 0.0
+    assert ds.source_to_index(9) == 7
+    assert ds.metadata["name"] == "chrA:2-10(+)"
+    # minus strand: reverse complement, index 0 = RNA 5' end
+    m = dd.load_bigwig(bw, fasta=str(fa), chrom="chrA", start=2, end=10, strand="-")[0]
+    assert m.sequence == "CGUACGUCC"
+    assert m.source_positions is not None and m.source_positions[0] == 10
+    assert m.reactivity[1] == 0.0 and m.reactivity[-2] == 0.5
+    with pytest.raises(ValueError, match="outside"):
+        dd.load_bigwig(bw, fasta=str(fa), chrom="chrA", start=5, end=99)
+    with pytest.raises(ValueError, match="not in"):
+        dd.load_bigwig(bw, fasta=str(fa), chrom="chrZ")
+    with pytest.raises(ValueError, match="needs"):
+        dd.load_bigwig(bw, chrom="chrA")

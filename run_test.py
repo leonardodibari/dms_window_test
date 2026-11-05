@@ -53,7 +53,17 @@ def prepare_dataset(
     src = cfg["source"]
     path = (cfg_dir / src["path"]).resolve()
     prov = dd.ensure_source(path, src.get("url"), redownload=redownload)
-    all_ds = dd.load(src["format"], path, **src.get("loader_options", {}))
+    opts = dict(src.get("loader_options", {}))
+    # auxiliary public files (e.g. the reference FASTA of a bigWig track):
+    # downloaded with provenance and passed to the loader as ``option=path``
+    extra_prov = {}
+    for aux in src.get("extra_sources", []):
+        apath = (cfg_dir / aux["path"]).resolve()
+        extra_prov[aux["option"]] = dd.ensure_source(apath, aux.get("url"), redownload=redownload)
+        opts[aux["option"]] = str(apath)
+    if extra_prov:
+        prov = {**prov, "extra_sources": extra_prov}
+    all_ds = dd.load(src["format"], path, **opts)
     sel = cfg.get("select", {})
     ds = dd.select_dataset(
         all_ds, annotation=sel.get("annotation"), row=sel.get("row"), construct=sel.get("construct")

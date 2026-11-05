@@ -1,0 +1,78 @@
+{
+  "dataset_id": "YXJA_EQR220_BZCN",
+  "source": {
+    "format": "bigwig",
+    "path": "YXJA_EQR220_BZCN.bw",
+    "url": "https://rasp2.zhanglab.net/api/downloadfile/?filetype=bw&filelist=Bsubtilis/SHAPE-seq_NAR_2022_Cheng/yxjA_EQR_220_rep1-pos.bw",
+    "landing_page": "https://rasp2.zhanglab.net/download/ (RASP v2; track Bsubtilis/SHAPE-seq_NAR_2022_Cheng/yxjA_EQR_220_rep1-pos.bw; Cheng et al. 2022 NAR, doi:10.1093/nar/gkac102)",
+    "extra_sources": [
+      {
+        "option": "fasta",
+        "path": "Bsubtilis.fa.gz",
+        "url": "https://rasp2.zhanglab.net/api/downloadfile/?filetype=fasta&filelist=Bsubtilis.fa.gz"
+      }
+    ],
+    "loader_options": {
+      "chrom": "NC_000964.3",
+      "start": 4005524,
+      "end": 4005743,
+      "strand": "+",
+      "reagent": "BzCN",
+      "name": "B. subtilis yxjA riboswitch leader"
+    }
+  },
+  "select": {},
+  "numbering": "source",
+  "mask": [
+    [
+      4005524,
+      4005526
+    ]
+  ],
+  "mask_reason": "Leading run of 3 exact zeros at the 5' end (full-length extension end of SHAPE-seq reads; same rule as RNASEP_DMS_0000).",
+  "region": [
+    4005527,
+    4005576
+  ],
+  "anchoring": "five_prime",
+  "window_grid": {
+    "step": 10
+  },
+  "epsilon": 0.02,
+  "evaluation_nucleotides": null,
+  "temperature_c": 37,
+  "bootstrap": {
+    "n_boot": 2000,
+    "block_length": 10,
+    "seed": 0
+  },
+  "models": {
+    "rnafold": {
+      "energy_params": "turner2004",
+      "salt_molar": null,
+      "dangles": 2
+    },
+    "contrafold": {
+      "executable": "/home/ldibari/miniforge3/bin/contrafold",
+      "posterior_threshold": 1e-05
+    },
+    "mxfold2": {
+      "executable": "mxfold2",
+      "param": null,
+      "seed": 0
+    }
+  },
+  "report_notes": {
+    "construct": "B. subtilis yxjA (nupG) purine riboswitch leader, 220-nt in vitro transcript (genome NC_000964.3:4005524-4005743, + strand, ends 8 nt before the nupG start), equilibrium-refolded ('EQR'), probed with BzCN SHAPE-seq, replicate 1. Cheng et al. 2022 NAR 50:12001. Numbering = genome coordinate.",
+    "region": "R = 4005527-4005576 (transcript nt 4-53): the first 50 nt with data, 5'-anchored windows.",
+    "data_caveats": [
+      "Refolding buffer, Mg2+ and temperature are not given in the paper's Methods; RNAfold folds at an assumed 37 °C. Ligand presence in the EQR samples was not verified (Results suggest no 2-aminopurine).",
+      "Track values are RASP's 'raw' SHAPE-seq reactivities; one value (transcript nt 80, rho ~ 137) is an outlier, which does not matter for Spearman correlation but would for a linear one.",
+      "Of the equilibrium transcript lengths in RASP (135, 160, 220 nt) the longest was chosen, so the window test has the most room."
+    ],
+    "limitations": [
+      "Experimental conditions are partly unknown (see Data caveats).",
+      "BzCN SHAPE-seq: all four nucleotides are evaluated."
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "dataset_id": "ROTA_RFS11_DMS",
+  "source": {
+    "format": "bigwig",
+    "path": "ROTA_RFS11_DMS.bw",
+    "url": "https://rasp2.zhanglab.net/api/downloadfile/?filetype=bw&filelist=rotavirus/SHAPE-MaP_NAR_2022_Coria/RFS11_50mM_DMS.bw",
+    "landing_page": "https://rasp2.zhanglab.net/download/ (RASP v2; track rotavirus/SHAPE-MaP_NAR_2022_Coria/RFS11_50mM_DMS.bw; Coria et al. 2022 NAR, doi:10.1093/nar/gkac738)",
+    "extra_sources": [
+      {
+        "option": "fasta",
+        "path": "rotavirus.fa.gz",
+        "url": "https://rasp2.zhanglab.net/api/downloadfile/?filetype=fasta&filelist=rotavirus.fa.gz"
+      }
+    ],
+    "loader_options": {
+      "chrom": "RFS11",
+      "strand": "+",
+      "reagent": "DMS",
+      "temperature_c": 37,
+      "mg_mM": 0.5,
+      "buffer": "5 mM HEPES-Na pH 7.5, 100 mM NaCl (bicine pH 8.0 added to 200 mM before DMS)",
+      "name": "Rotavirus A RF segment 11 (NSP5)"
+    }
+  },
+  "select": {},
+  "numbering": "source",
+  "mask": [],
+  "mask_reason": "No extra mask. Positions 1-5, 8-10, 311 and 608-667 have no value in the track and are already NaN (608-667 at the 3' end is presumably the RT/PCR primer-binding region; Supplementary Table S1 of the paper was not checked).",
+  "region": [
+    6,
+    55
+  ],
+  "anchoring": "five_prime",
+  "window_grid": {
+    "step": 10
+  },
+  "epsilon": 0.02,
+  "evaluation_nucleotides": null,
+  "temperature_c": "from_dataset",
+  "bootstrap": {
+    "n_boot": 2000,
+    "block_length": 10,
+    "seed": 0
+  },
+  "models": {
+    "rnafold": {
+      "energy_params": "turner2004",
+      "salt_molar": null,
+      "dangles": 2
+    },
+    "contrafold": {
+      "executable": "/home/ldibari/miniforge3/bin/contrafold",
+      "posterior_threshold": 1e-05
+    },
+    "mxfold2": {
+      "executable": "mxfold2",
+      "param": null,
+      "seed": 0
+    }
+  },
+  "report_notes": {
+    "construct": "Bovine rotavirus A strain RF, genome segment 11 (NSP5/NSP6 mRNA), full-length in vitro T7 transcript (667 nt in the RASP reference). In vitro DMS-MaPseq, 0.5% (v/v) DMS ('50mM' in the RASP track name), no NSP2. Coria et al. 2022 NAR 50:10078.",
+    "region": "R = 6-55: the first 50 nt of the RNA that have data (same rule as the other datasets), 5'-anchored windows.",
+    "data_caveats": [
+      "Conditions from the paper's Methods (not from the file): refolded 65 °C 5 min then slow cooling; probed at 37 °C for 1 min in 5 mM HEPES-Na pH 7.5, 0.5 mM MgCl2, 100 mM NaCl, ~200 mM bicine pH 8.0.",
+      "Track values are RASP's 'raw' DMS-MaPseq reactivities; normalisation does not matter for Spearman correlation.",
+      "Data come from RASP v2 (genome-coordinate bigWig); the sequence is taken from RASP's reference FASTA for segment RFS11."
+    ],
+    "limitations": [
+      "Low Mg2+ (0.5 mM) differs from the 10 mM Mg2+ RMDB datasets; none of the models has a Mg2+ term.",
+      "A viral mRNA segment, not a cellular 5' UTR."
+    ]
+  }
+}

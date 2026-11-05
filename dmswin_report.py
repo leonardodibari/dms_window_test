@@ -453,22 +453,46 @@ def render(
             f"* **Source:** {ds.source_url} — file `{cfg['source']['path']}` downloaded from "
             f"{prov.get('url')} on {prov.get('download_date')} (SHA-256 `{prov.get('sha256')}`)."
         )
+        for opt, ap in prov.get("extra_sources", {}).items():
+            parts.append(
+                f"* **Auxiliary file ({opt}):** `{ap.get('path')}` downloaded from {ap.get('url')} on "
+                f"{ap.get('download_date')} (SHA-256 `{ap.get('sha256')}`)."
+            )
+        if ds.metadata.get("genome_region"):
+            parts.append(
+                f"* **Genome region extracted:** {ds.metadata['genome_region']} (1-based, inclusive); "
+                "positions without a track value are NaN."
+            )
         if notes.get("construct"):
             parts.append(f"* **Construct:** {notes['construct']}")
         parts.append(
-            f"* **Sequence:** N = {ds.n} nt, RDAT/source numbering {int(sp[0])}–{int(sp[-1])} "
+            f"* **Sequence:** N = {ds.n} nt, source numbering (RDAT SEQPOS or genome coordinate) {int(sp[0])}–{int(sp[-1])} "
             f"(1-based position = source − {int(sp[0]) - 1})."
         )
-        parts.append(
-            f"* **Row used:** {sel.get('row')} of {sel.get('n_constructs_in_file')} data rows, selected by "
-            f"annotation match `{sel.get('selection')}` (row annotations: `{sel.get('row_annotations')}`). "
-            "The selection fails loudly if it matches zero or several rows."
+        if sel.get("row") is not None or sel.get("n_constructs_in_file", 1) > 1:
+            parts.append(
+                f"* **Row used:** {sel.get('row')} of {sel.get('n_constructs_in_file')} data rows, selected by "
+                f"annotation match `{sel.get('selection')}` (row annotations: `{sel.get('row_annotations')}`). "
+                "The selection fails loudly if it matches zero or several rows."
+            )
+        else:
+            parts.append("* **Row used:** the file holds a single profile; no selection needed.")
+
+        def _v(x: object, unit: str = "") -> str:
+            return "not given" if x is None else f"{x}{unit}"
+
+        cond_src = (
+            "file annotations"
+            if ds.metadata.get("format") == "rdat"
+            else "config loader options (the file has no annotations)"
         )
-        parts.append(
-            f"* **Reagent:** {ds.reagent}. **Conditions (from file annotations):** "
-            f"{c.temperature_c} °C, Mg²⁺ {c.mg_mm} mM, buffer {c.buffer}; all annotations: "
-            f"`{', '.join(c.chemicals)}`."
+        line = (
+            f"* **Reagent:** {ds.reagent}. **Conditions ({cond_src}):** "
+            f"temperature {_v(c.temperature_c, ' °C')}, Mg²⁺ {_v(c.mg_mm, ' mM')}, buffer {_v(c.buffer)}"
         )
+        if c.chemicals:
+            line += f"; all annotations: `{', '.join(c.chemicals)}`"
+        parts.append(line + ".")
         parts.append(
             f"* **Evaluation nucleotides:** {''.join(sorted(res.eval_nts))} "
             f"({meta['datasets'][ds.dataset_id]['effective']['evaluation_nucleotides_source']})."
@@ -547,13 +571,16 @@ def render(
     parts.append("|---|---|")
     for f, d in [
         ("run_test.py", "CLI entry point"),
-        ("dmswin_data.py", "Dataset dataclass, sequence/reagent handling, RDAT and CSV/TSV loaders"),
+        (
+            "dmswin_data.py",
+            "Dataset dataclass, sequence/reagent handling, RDAT, CSV/TSV and bigWig+FASTA loaders",
+        ),
         ("dmswin_models.py", "RNAfold, CONTRAfold, MXfold2 wrappers (sequence → u, metadata)"),
         ("dmswin_analysis.py", "windows, evaluation set, Spearman, block bootstrap, suggested W"),
         ("dmswin_plots.py", "figures"),
         ("dmswin_report.py", "this README"),
         ("config_*.json", "dataset configs (all dataset-specific choices)"),
-        ("*.rdat, *.provenance.json", "downloaded data + URL/date/SHA-256"),
+        ("*.rdat, *.bw, *.fa.gz, *.provenance.json", "downloaded data + URL/date/SHA-256"),
         ("summary.csv", "one row per (model, W): window, ρ_W, ρ_N, Δρ with CIs, convergence metrics"),
         ("summary_wide.csv", "rows = W, columns per model"),
         (
