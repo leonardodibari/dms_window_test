@@ -2,7 +2,7 @@
   "dataset_id": "HIV3PR_DMS_0001",
   "source": {
     "format": "rdat",
-    "path": "HIV3PR_DMS_0001.rdat",
+    "path": "../data/HIV3PR_DMS_0001.rdat",
     "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/HIV3PR_DMS_0001.rdat",
     "landing_page": "https://rmdb.stanford.edu/detail/HIV3PR_DMS_0001/"
   },
@@ -51,7 +51,7 @@
       "dangles": 2
     },
     "contrafold": {
-      "executable": "/home/ldibari/miniforge3/bin/contrafold",
+      "executable": "contrafold",
       "posterior_threshold": 1e-05
     },
     "mxfold2": {

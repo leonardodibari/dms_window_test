@@ -2,13 +2,13 @@
   "dataset_id": "ROTA_RFS11_DMS",
   "source": {
     "format": "bigwig",
-    "path": "ROTA_RFS11_DMS.bw",
+    "path": "../data/ROTA_RFS11_DMS.bw",
     "url": "https://rasp2.zhanglab.net/api/downloadfile/?filetype=bw&filelist=rotavirus/SHAPE-MaP_NAR_2022_Coria/RFS11_50mM_DMS.bw",
     "landing_page": "https://rasp2.zhanglab.net/download/ (RASP v2; track rotavirus/SHAPE-MaP_NAR_2022_Coria/RFS11_50mM_DMS.bw; Coria et al. 2022 NAR, doi:10.1093/nar/gkac738)",
     "extra_sources": [
       {
         "option": "fasta",
-        "path": "rotavirus.fa.gz",
+        "path": "../data/rotavirus.fa.gz",
         "url": "https://rasp2.zhanglab.net/api/downloadfile/?filetype=fasta&filelist=rotavirus.fa.gz"
       }
     ],
@@ -49,7 +49,7 @@
       "dangles": 2
     },
     "contrafold": {
-      "executable": "/home/ldibari/miniforge3/bin/contrafold",
+      "executable": "contrafold",
       "posterior_threshold": 1e-05
     },
     "mxfold2": {

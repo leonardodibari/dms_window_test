@@ -1,6 +1,6 @@
 {
-  "run_started_utc": "2026-11-05T09:40:13+00:00",
-  "command": "python run_test.py config_TRP4P6_DMS_0007.json config_HOXA9_STD_0000.json config_HOXA5_STD_0000.json config_CSDE1_DMS_0000.json config_HIV3PR_DMS_0001.json config_RNASEP_DMS_0000.json config_ROTA_RFS11_DMS.json config_YXJA_EQR220_BZCN.json --out .",
+  "run_started_utc": "2026-11-06T11:37:54+00:00",
+  "command": "python run_test.py configs/config_TRP4P6_DMS_0007.json configs/config_HOXA9_STD_0000.json configs/config_HOXA5_STD_0000.json configs/config_CSDE1_DMS_0000.json configs/config_HIV3PR_DMS_0001.json configs/config_RNASEP_DMS_0000.json configs/config_ROTA_RFS11_DMS.json configs/config_YXJA_EQR220_BZCN.json --out .",
   "tools": {
     "python": "3.12.8 | packaged by conda-forge | (main, Dec  5 2024, 14:24:40) [GCC 13.3.0]",
     "python_executable": "/home/ldibari/RNAIdea/EncoderDna/EncoderDna_env/bin/python",
@@ -13,12 +13,12 @@
   },
   "datasets": {
     "TRP4P6_DMS_0007": {
-      "config_file": "config_TRP4P6_DMS_0007.json",
+      "config_file": "configs/config_TRP4P6_DMS_0007.json",
       "config": {
         "dataset_id": "TRP4P6_DMS_0007",
         "source": {
           "format": "rdat",
-          "path": "TRP4P6_DMS_0007.rdat",
+          "path": "../data/TRP4P6_DMS_0007.rdat",
           "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/TRP4P6_DMS_0007.rdat",
           "landing_page": "https://rmdb.stanford.edu/detail/TRP4P6_DMS_0007/"
         },
@@ -64,7 +64,7 @@
             "dangles": 2
           },
           "contrafold": {
-            "executable": "/home/ldibari/miniforge3/bin/contrafold",
+            "executable": "contrafold",
             "posterior_threshold": 1e-05
           },
           "mxfold2": {
@@ -631,21 +631,21 @@
         }
       },
       "figures": [
-        "TRP4P6_DMS_0007_fig_rho_vs_window.png",
-        "TRP4P6_DMS_0007_fig_delta_rho_vs_window.png",
-        "TRP4P6_DMS_0007_fig_convergence_vs_window.png",
-        "TRP4P6_DMS_0007_fig_profile.png",
-        "TRP4P6_DMS_0007_fig_du_heatmap.png",
-        "TRP4P6_DMS_0007_fig_u_vs_reactivity.png"
+        "fig_rho_vs_window.png",
+        "fig_delta_rho_vs_window.png",
+        "fig_convergence_vs_window.png",
+        "fig_profile.png",
+        "fig_du_heatmap.png",
+        "fig_u_vs_reactivity.png"
       ]
     },
     "HOXA9_STD_0000": {
-      "config_file": "config_HOXA9_STD_0000.json",
+      "config_file": "configs/config_HOXA9_STD_0000.json",
       "config": {
         "dataset_id": "HOXA9_STD_0000",
         "source": {
           "format": "rdat",
-          "path": "HOXA9_STD_0000.rdat",
+          "path": "../data/HOXA9_STD_0000.rdat",
           "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/HOXA9_STD_0000.rdat",
           "landing_page": "https://rmdb.stanford.edu/detail/HOXA9_STD_0000/"
         },
@@ -690,7 +690,7 @@
             "dangles": 2
           },
           "contrafold": {
-            "executable": "/home/ldibari/miniforge3/bin/contrafold",
+            "executable": "contrafold",
             "posterior_threshold": 1e-05
           },
           "mxfold2": {
@@ -1484,21 +1484,21 @@
         }
       },
       "figures": [
-        "HOXA9_STD_0000_fig_rho_vs_window.png",
-        "HOXA9_STD_0000_fig_delta_rho_vs_window.png",
-        "HOXA9_STD_0000_fig_convergence_vs_window.png",
-        "HOXA9_STD_0000_fig_profile.png",
-        "HOXA9_STD_0000_fig_du_heatmap.png",
-        "HOXA9_STD_0000_fig_u_vs_reactivity.png"
+        "fig_rho_vs_window.png",
+        "fig_delta_rho_vs_window.png",
+        "fig_convergence_vs_window.png",
+        "fig_profile.png",
+        "fig_du_heatmap.png",
+        "fig_u_vs_reactivity.png"
       ]
     },
     "HOXA5_STD_0000": {
-      "config_file": "config_HOXA5_STD_0000.json",
+      "config_file": "configs/config_HOXA5_STD_0000.json",
       "config": {
         "dataset_id": "HOXA5_STD_0000",
         "source": {
           "format": "rdat",
-          "path": "HOXA5_STD_0000.rdat",
+          "path": "../data/HOXA5_STD_0000.rdat",
           "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/HOXA5_STD_0000.rdat",
           "landing_page": "https://rmdb.stanford.edu/detail/HOXA5_STD_0000/"
         },
@@ -1544,7 +1544,7 @@
             "dangles": 2
           },
           "contrafold": {
-            "executable": "/home/ldibari/miniforge3/bin/contrafold",
+            "executable": "contrafold",
             "posterior_threshold": 1e-05
           },
           "mxfold2": {
@@ -2169,21 +2169,21 @@
         }
       },
       "figures": [
-        "HOXA5_STD_0000_fig_rho_vs_window.png",
-        "HOXA5_STD_0000_fig_delta_rho_vs_window.png",
-        "HOXA5_STD_0000_fig_convergence_vs_window.png",
-        "HOXA5_STD_0000_fig_profile.png",
-        "HOXA5_STD_0000_fig_du_heatmap.png",
-        "HOXA5_STD_0000_fig_u_vs_reactivity.png"
+        "fig_rho_vs_window.png",
+        "fig_delta_rho_vs_window.png",
+        "fig_convergence_vs_window.png",
+        "fig_profile.png",
+        "fig_du_heatmap.png",
+        "fig_u_vs_reactivity.png"
       ]
     },
     "CSDE1_DMS_0000": {
-      "config_file": "config_CSDE1_DMS_0000.json",
+      "config_file": "configs/config_CSDE1_DMS_0000.json",
       "config": {
         "dataset_id": "CSDE1_DMS_0000",
         "source": {
           "format": "rdat",
-          "path": "CSDE1_DMS_0000.rdat",
+          "path": "../data/CSDE1_DMS_0000.rdat",
           "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/CSDE1_DMS_0000.rdat",
           "landing_page": "https://rmdb.stanford.edu/detail/CSDE1_DMS_0000/"
         },
@@ -2221,7 +2221,7 @@
             "dangles": 2
           },
           "contrafold": {
-            "executable": "/home/ldibari/miniforge3/bin/contrafold",
+            "executable": "contrafold",
             "posterior_threshold": 1e-05
           },
           "mxfold2": {
@@ -2797,21 +2797,21 @@
         }
       },
       "figures": [
-        "CSDE1_DMS_0000_fig_rho_vs_window.png",
-        "CSDE1_DMS_0000_fig_delta_rho_vs_window.png",
-        "CSDE1_DMS_0000_fig_convergence_vs_window.png",
-        "CSDE1_DMS_0000_fig_profile.png",
-        "CSDE1_DMS_0000_fig_du_heatmap.png",
-        "CSDE1_DMS_0000_fig_u_vs_reactivity.png"
+        "fig_rho_vs_window.png",
+        "fig_delta_rho_vs_window.png",
+        "fig_convergence_vs_window.png",
+        "fig_profile.png",
+        "fig_du_heatmap.png",
+        "fig_u_vs_reactivity.png"
       ]
     },
     "HIV3PR_DMS_0001": {
-      "config_file": "config_HIV3PR_DMS_0001.json",
+      "config_file": "configs/config_HIV3PR_DMS_0001.json",
       "config": {
         "dataset_id": "HIV3PR_DMS_0001",
         "source": {
           "format": "rdat",
-          "path": "HIV3PR_DMS_0001.rdat",
+          "path": "../data/HIV3PR_DMS_0001.rdat",
           "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/HIV3PR_DMS_0001.rdat",
           "landing_page": "https://rmdb.stanford.edu/detail/HIV3PR_DMS_0001/"
         },
@@ -2860,7 +2860,7 @@
             "dangles": 2
           },
           "contrafold": {
-            "executable": "/home/ldibari/miniforge3/bin/contrafold",
+            "executable": "contrafold",
             "posterior_threshold": 1e-05
           },
           "mxfold2": {
@@ -3520,21 +3520,21 @@
         }
       },
       "figures": [
-        "HIV3PR_DMS_0001_fig_rho_vs_window.png",
-        "HIV3PR_DMS_0001_fig_delta_rho_vs_window.png",
-        "HIV3PR_DMS_0001_fig_convergence_vs_window.png",
-        "HIV3PR_DMS_0001_fig_profile.png",
-        "HIV3PR_DMS_0001_fig_du_heatmap.png",
-        "HIV3PR_DMS_0001_fig_u_vs_reactivity.png"
+        "fig_rho_vs_window.png",
+        "fig_delta_rho_vs_window.png",
+        "fig_convergence_vs_window.png",
+        "fig_profile.png",
+        "fig_du_heatmap.png",
+        "fig_u_vs_reactivity.png"
       ]
     },
     "RNASEP_DMS_0000": {
-      "config_file": "config_RNASEP_DMS_0000.json",
+      "config_file": "configs/config_RNASEP_DMS_0000.json",
       "config": {
         "dataset_id": "RNASEP_DMS_0000",
         "source": {
           "format": "rdat",
-          "path": "RNASEP_DMS_0000.rdat",
+          "path": "../data/RNASEP_DMS_0000.rdat",
           "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/RNASEP_DMS_0000.rdat",
           "landing_page": "https://rmdb.stanford.edu/detail/RNASEP_DMS_0000/"
         },
@@ -3579,7 +3579,7 @@
             "dangles": 2
           },
           "contrafold": {
-            "executable": "/home/ldibari/miniforge3/bin/contrafold",
+            "executable": "contrafold",
             "posterior_threshold": 1e-05
           },
           "mxfold2": {
@@ -4239,27 +4239,27 @@
         }
       },
       "figures": [
-        "RNASEP_DMS_0000_fig_rho_vs_window.png",
-        "RNASEP_DMS_0000_fig_delta_rho_vs_window.png",
-        "RNASEP_DMS_0000_fig_convergence_vs_window.png",
-        "RNASEP_DMS_0000_fig_profile.png",
-        "RNASEP_DMS_0000_fig_du_heatmap.png",
-        "RNASEP_DMS_0000_fig_u_vs_reactivity.png"
+        "fig_rho_vs_window.png",
+        "fig_delta_rho_vs_window.png",
+        "fig_convergence_vs_window.png",
+        "fig_profile.png",
+        "fig_du_heatmap.png",
+        "fig_u_vs_reactivity.png"
       ]
     },
     "ROTA_RFS11_DMS": {
-      "config_file": "config_ROTA_RFS11_DMS.json",
+      "config_file": "configs/config_ROTA_RFS11_DMS.json",
       "config": {
         "dataset_id": "ROTA_RFS11_DMS",
         "source": {
           "format": "bigwig",
-          "path": "ROTA_RFS11_DMS.bw",
+          "path": "../data/ROTA_RFS11_DMS.bw",
           "url": "https://rasp2.zhanglab.net/api/downloadfile/?filetype=bw&filelist=rotavirus/SHAPE-MaP_NAR_2022_Coria/RFS11_50mM_DMS.bw",
           "landing_page": "https://rasp2.zhanglab.net/download/ (RASP v2; track rotavirus/SHAPE-MaP_NAR_2022_Coria/RFS11_50mM_DMS.bw; Coria et al. 2022 NAR, doi:10.1093/nar/gkac738)",
           "extra_sources": [
             {
               "option": "fasta",
-              "path": "rotavirus.fa.gz",
+              "path": "../data/rotavirus.fa.gz",
               "url": "https://rasp2.zhanglab.net/api/downloadfile/?filetype=fasta&filelist=rotavirus.fa.gz"
             }
           ],
@@ -4300,7 +4300,7 @@
             "dangles": 2
           },
           "contrafold": {
-            "executable": "/home/ldibari/miniforge3/bin/contrafold",
+            "executable": "contrafold",
             "posterior_threshold": 1e-05
           },
           "mxfold2": {
@@ -5781,27 +5781,27 @@
         }
       },
       "figures": [
-        "ROTA_RFS11_DMS_fig_rho_vs_window.png",
-        "ROTA_RFS11_DMS_fig_delta_rho_vs_window.png",
-        "ROTA_RFS11_DMS_fig_convergence_vs_window.png",
-        "ROTA_RFS11_DMS_fig_profile.png",
-        "ROTA_RFS11_DMS_fig_du_heatmap.png",
-        "ROTA_RFS11_DMS_fig_u_vs_reactivity.png"
+        "fig_rho_vs_window.png",
+        "fig_delta_rho_vs_window.png",
+        "fig_convergence_vs_window.png",
+        "fig_profile.png",
+        "fig_du_heatmap.png",
+        "fig_u_vs_reactivity.png"
       ]
     },
     "YXJA_EQR220_BZCN": {
-      "config_file": "config_YXJA_EQR220_BZCN.json",
+      "config_file": "configs/config_YXJA_EQR220_BZCN.json",
       "config": {
         "dataset_id": "YXJA_EQR220_BZCN",
         "source": {
           "format": "bigwig",
-          "path": "YXJA_EQR220_BZCN.bw",
+          "path": "../data/YXJA_EQR220_BZCN.bw",
           "url": "https://rasp2.zhanglab.net/api/downloadfile/?filetype=bw&filelist=Bsubtilis/SHAPE-seq_NAR_2022_Cheng/yxjA_EQR_220_rep1-pos.bw",
           "landing_page": "https://rasp2.zhanglab.net/download/ (RASP v2; track Bsubtilis/SHAPE-seq_NAR_2022_Cheng/yxjA_EQR_220_rep1-pos.bw; Cheng et al. 2022 NAR, doi:10.1093/nar/gkac102)",
           "extra_sources": [
             {
               "option": "fasta",
-              "path": "Bsubtilis.fa.gz",
+              "path": "../data/Bsubtilis.fa.gz",
               "url": "https://rasp2.zhanglab.net/api/downloadfile/?filetype=fasta&filelist=Bsubtilis.fa.gz"
             }
           ],
@@ -5846,7 +5846,7 @@
             "dangles": 2
           },
           "contrafold": {
-            "executable": "/home/ldibari/miniforge3/bin/contrafold",
+            "executable": "contrafold",
             "posterior_threshold": 1e-05
           },
           "mxfold2": {
@@ -6440,12 +6440,12 @@
         }
       },
       "figures": [
-        "YXJA_EQR220_BZCN_fig_rho_vs_window.png",
-        "YXJA_EQR220_BZCN_fig_delta_rho_vs_window.png",
-        "YXJA_EQR220_BZCN_fig_convergence_vs_window.png",
-        "YXJA_EQR220_BZCN_fig_profile.png",
-        "YXJA_EQR220_BZCN_fig_du_heatmap.png",
-        "YXJA_EQR220_BZCN_fig_u_vs_reactivity.png"
+        "fig_rho_vs_window.png",
+        "fig_delta_rho_vs_window.png",
+        "fig_convergence_vs_window.png",
+        "fig_profile.png",
+        "fig_du_heatmap.png",
+        "fig_u_vs_reactivity.png"
       ]
     }
   },
@@ -6499,7 +6499,7 @@
     "overview_relative_window.png",
     "overview_summary.png"
   ],
-  "run_finished_utc": "2026-11-05T10:12:55+00:00",
+  "run_finished_utc": "2026-11-06T12:12:21+00:00",
   "pip_freeze": [
     "argcomplete==3.7.2",
     "argh==0.31.3",

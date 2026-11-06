@@ -2,7 +2,7 @@
   "dataset_id": "RNASEP_DMS_0000",
   "source": {
     "format": "rdat",
-    "path": "RNASEP_DMS_0000.rdat",
+    "path": "../data/RNASEP_DMS_0000.rdat",
     "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/RNASEP_DMS_0000.rdat",
     "landing_page": "https://rmdb.stanford.edu/detail/RNASEP_DMS_0000/"
   },
@@ -47,7 +47,7 @@
       "dangles": 2
     },
     "contrafold": {
-      "executable": "/home/ldibari/miniforge3/bin/contrafold",
+      "executable": "contrafold",
       "posterior_threshold": 1e-05
     },
     "mxfold2": {

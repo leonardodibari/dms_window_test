@@ -1,0 +1,7 @@
+# Extra packages for slides/build_deck.py (on top of the dmswin environment).
+# The PDF is drawn with the Carlito font (metric-compatible with Calibri):
+#   Debian/Ubuntu: sudo apt install fonts-crosextra-carlito
+python-pptx==1.0.2
+fonttools==4.68.0
+lxml
+pillow

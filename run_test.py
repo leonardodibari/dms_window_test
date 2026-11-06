@@ -2,10 +2,17 @@
 
 Usage
 -----
-    python run_test.py config_TRP4P6_DMS_0007.json --out . --seed 0
+    python run_test.py configs/config_*.json --out .
 
 Every dataset-specific choice comes from the JSON config(s); CLI flags
 override config values for all datasets.
+
+Output layout (relative to ``--out``)::
+
+    results/<dataset_id>/   summary.csv, summary_wide.csv, per_position.csv, fig_*.png
+    results/overview/       overview_*.png, cross_dataset_wilcoxon.csv (several datasets)
+    results/run_metadata.json
+    docs/method.md, docs/overview.md, docs/datasets/<dataset_id>.md   (generated reports)
 """
 
 from __future__ import annotations
@@ -31,6 +38,14 @@ import dmswin_plots as dp
 import dmswin_report as rep
 
 REQUIRED_MODELS = ("rnafold", "contrafold", "mxfold2")
+
+
+def _rel(path: Path, base: Path) -> str:
+    """``path`` relative to ``base`` when possible (keeps metadata machine-independent)."""
+    try:
+        return path.resolve().relative_to(base).as_posix()
+    except ValueError:
+        return str(path)
 
 
 def _to_index(ds: dd.Dataset, pos: int, numbering: str) -> int:
@@ -287,19 +302,20 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--anchoring", choices=["centered", "five_prime"], default=None)
     p.add_argument("--eval-nts", default=None, help="Evaluation nucleotides, e.g. 'AC'.")
     p.add_argument("--redownload", action="store_true", help="Re-download public source files.")
-    p.add_argument("--no-report", action="store_true", help="Skip README.md generation.")
+    p.add_argument("--no-report", action="store_true", help="Skip generation of the docs/ reports.")
     return p.parse_args(argv)
 
 
 def run(args: argparse.Namespace) -> list[an.DatasetResult]:
     """Run all configs; write tables, figures, metadata and report."""
     out = args.out.resolve()
-    out.mkdir(parents=True, exist_ok=True)
+    res_dir = out / "results"
+    res_dir.mkdir(parents=True, exist_ok=True)
     multi = len(args.configs) > 1
     results: list[an.DatasetResult] = []
     meta: dict[str, Any] = {
         "run_started_utc": _dt.datetime.now(_dt.UTC).isoformat(timespec="seconds"),
-        "command": " ".join([Path(sys.executable).name, *sys.argv]),
+        "command": " ".join(["python", *sys.argv]),
         "tools": tool_versions(),
         "datasets": {},
     }
@@ -333,14 +349,15 @@ def run(args: argparse.Namespace) -> list[an.DatasetResult]:
         )
         results.append(res)
         bias = contrafold_threshold_check(cfg, ds, res)
-        prefix = f"{ds.dataset_id}_" if multi else ""
+        ds_dir = res_dir / ds.dataset_id
+        ds_dir.mkdir(parents=True, exist_ok=True)
         summary = [r for mr in res.models.values() for r in mr.rows]
-        write_csv(out / f"{prefix}summary.csv", summary)
-        write_csv(out / f"{prefix}summary_wide.csv", wide_rows(res))
-        write_csv(out / f"{prefix}per_position.csv", per_position_rows(res))
-        figs = dp.make_all(res, out, prefix)
+        write_csv(ds_dir / "summary.csv", summary)
+        write_csv(ds_dir / "summary_wide.csv", wide_rows(res))
+        write_csv(ds_dir / "per_position.csv", per_position_rows(res))
+        figs = dp.make_all(res, ds_dir)
         meta["datasets"][ds.dataset_id] = {
-            "config_file": str(cfg_path),
+            "config_file": _rel(cfg_path, out),
             "config": cfg,
             "effective": {
                 "region_1based": [region[0] + 1, region[1] + 1],
@@ -377,20 +394,32 @@ def run(args: argparse.Namespace) -> list[an.DatasetResult]:
             "figures": figs,
         }
         contexts.append(
-            {"cfg": cfg, "prefix": prefix, "flags": flags, "figs": figs, "selection": rec, "bias": bias}
+            {
+                "cfg": cfg,
+                "config_file": _rel(cfg_path, out),
+                "flags": flags,
+                "figs": figs,
+                "selection": rec,
+                "bias": bias,
+            }
         )
     cross = an.cross_dataset_tests(results)
+    ov_dir = res_dir / "overview"
+    if multi:
+        ov_dir.mkdir(parents=True, exist_ok=True)
     if cross:
-        write_csv(out / "cross_dataset_wilcoxon.csv", cross)
+        write_csv(ov_dir / "cross_dataset_wilcoxon.csv", cross)
     meta["cross_dataset_wilcoxon"] = cross
-    meta["overview_figures"] = dp.make_overview(results, out) if multi else []
+    meta["overview_figures"] = dp.make_overview(results, ov_dir) if multi else []
     meta["run_finished_utc"] = _dt.datetime.now(_dt.UTC).isoformat(timespec="seconds")
     meta["pip_freeze"] = subprocess.run(
         [sys.executable, "-m", "pip", "freeze"], capture_output=True, text=True, check=False
     ).stdout.splitlines()
-    (out / "run_metadata.json").write_text(json.dumps(meta, indent=2, default=str))
+    (res_dir / "run_metadata.json").write_text(json.dumps(meta, indent=2, default=str))
     if not args.no_report:
-        (out / "README.md").write_text(rep.render(results, contexts, meta, cross))
+        for rel, text in rep.render(results, contexts, meta, cross).items():
+            (out / rel).parent.mkdir(parents=True, exist_ok=True)
+            (out / rel).write_text(text)
     return results
 
 

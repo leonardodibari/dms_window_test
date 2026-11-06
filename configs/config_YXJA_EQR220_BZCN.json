@@ -2,13 +2,13 @@
   "dataset_id": "YXJA_EQR220_BZCN",
   "source": {
     "format": "bigwig",
-    "path": "YXJA_EQR220_BZCN.bw",
+    "path": "../data/YXJA_EQR220_BZCN.bw",
     "url": "https://rasp2.zhanglab.net/api/downloadfile/?filetype=bw&filelist=Bsubtilis/SHAPE-seq_NAR_2022_Cheng/yxjA_EQR_220_rep1-pos.bw",
     "landing_page": "https://rasp2.zhanglab.net/download/ (RASP v2; track Bsubtilis/SHAPE-seq_NAR_2022_Cheng/yxjA_EQR_220_rep1-pos.bw; Cheng et al. 2022 NAR, doi:10.1093/nar/gkac102)",
     "extra_sources": [
       {
         "option": "fasta",
-        "path": "Bsubtilis.fa.gz",
+        "path": "../data/Bsubtilis.fa.gz",
         "url": "https://rasp2.zhanglab.net/api/downloadfile/?filetype=fasta&filelist=Bsubtilis.fa.gz"
       }
     ],
@@ -53,7 +53,7 @@
       "dangles": 2
     },
     "contrafold": {
-      "executable": "/home/ldibari/miniforge3/bin/contrafold",
+      "executable": "contrafold",
       "posterior_threshold": 1e-05
     },
     "mxfold2": {

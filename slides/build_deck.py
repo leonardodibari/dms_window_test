@@ -27,7 +27,7 @@ from pptx.oxml.ns import qn
 from pptx.util import Inches, Pt
 
 HERE = Path(__file__).resolve().parent
-FIG = HERE.parent
+FIG = HERE.parent / "results" / "overview"
 OUT = HERE / "dms_window_test_slides"
 PREVIEW = Path(__import__("os").environ.get("DECK_PREVIEW_DIR", "/tmp"))
 W, H = 13.333, 7.5

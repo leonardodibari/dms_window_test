@@ -2,7 +2,7 @@
   "dataset_id": "TRP4P6_DMS_0007",
   "source": {
     "format": "rdat",
-    "path": "TRP4P6_DMS_0007.rdat",
+    "path": "../data/TRP4P6_DMS_0007.rdat",
     "url": "https://github.com/DasLab/rmdb.github.io/releases/download/data-rna-structures/TRP4P6_DMS_0007.rdat",
     "landing_page": "https://rmdb.stanford.edu/detail/TRP4P6_DMS_0007/"
   },
@@ -25,7 +25,7 @@
   "bootstrap": {"n_boot": 2000, "block_length": 10, "seed": 0},
   "models": {
     "rnafold": {"energy_params": "turner2004", "salt_molar": null, "dangles": 2},
-    "contrafold": {"executable": "/home/ldibari/miniforge3/bin/contrafold", "posterior_threshold": 1e-05},
+    "contrafold": {"executable": "contrafold", "posterior_threshold": 1e-05},
     "mxfold2": {"executable": "mxfold2", "param": null, "seed": 0}
   },
   "report_notes": {

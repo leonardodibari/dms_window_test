@@ -1,0 +1,29 @@
+# Conda environment for the folding-window test (Linux x86_64).
+# Create it with:  bash setup_env.sh        (or see README.md, "Reproduce")
+# Versions are the ones used for the committed results (results/run_metadata.json).
+name: dmswin
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.12
+  - numpy=2.5.1
+  - scipy=1.18.1
+  - matplotlib=3.11.1
+  - contrafold=2.02          # bioconda; CONTRAfold v2.01 binary
+  - cmake                    # needed to build MXfold2
+  - cxx-compiler
+  - pip
+  - pytest
+  - ruff
+  - mypy
+  - git
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cpu
+      - ViennaRNA==2.7.2     # RNAfold Python bindings
+      - torch==2.13.0        # CPU build is enough (MXfold2 backend)
+      - pybind11
+      - tqdm                 # MXfold2 runtime dependency
+      - poetry-core          # build backend of MXfold2
+      - wheel
+      - setuptools
