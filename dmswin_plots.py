@@ -96,6 +96,11 @@ def _rows(res: DatasetResult, name: str) -> dict[str, np.ndarray]:
     }
 
 
+def _rho_n_label(d: dict[str, np.ndarray]) -> str:
+    """Full-fold rho_N with its CI, for panel titles."""
+    return f"ρ_N = {d['rho_N'][0]:.2f} [{d['rho_N_ci_lo'][0]:.2f}, {d['rho_N_ci_hi'][0]:.2f}]"
+
+
 def fig_rho_vs_window(res: DatasetResult, path: Path) -> None:
     """Figure 1: rho_W vs W with CI band and rho_N reference; one panel per model."""
     names = list(res.models)
@@ -137,7 +142,7 @@ def fig_delta_rho(res: DatasetResult, path: Path) -> None:
         )
         sw = res.suggestions[name]["W_first"]
         ax.plot(d["W"], d["delta_rho"], label=f"Δρ (suggested W = {sw})", **st)
-        ax.set_title(name)
+        ax.set_title(f"{name}\n{_rho_n_label(d)}")
         ax.set_xlabel("Window size W (nt)")
         ax.legend(fontsize=7, loc="lower right")
     axes[0].set_ylabel("Δρ(W) = ρ_N − ρ_W")
@@ -147,7 +152,8 @@ def fig_delta_rho(res: DatasetResult, path: Path) -> None:
         fig,
         path,
         "Shaded: 95% paired block-bootstrap CI of Δρ. Suggested W: smallest W with Δρ ≤ ε (heuristic). "
-        "Δρ < 0: the truncated fold agrees better with the data than the full fold.",
+        "Δρ < 0: the truncated fold agrees better with the data than the full fold. "
+        "Titles: full-fold ρ_N with 95% CI.",
     )
 
 
@@ -327,9 +333,9 @@ DATASET_COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#00830
 DATASET_MARKERS = ["o", "s", "^", "D", "v", "P", "X", "h"]
 
 
-def _grid(n_panels: int, ncols: int = 3) -> tuple[plt.Figure, np.ndarray]:
+def _grid(n_panels: int, ncols: int = 3, row_height: float = 3.3) -> tuple[plt.Figure, np.ndarray]:
     nrows = -(-n_panels // ncols)
-    fig, axes = plt.subplots(nrows, ncols, figsize=(4.2 * ncols, 3.3 * nrows), squeeze=False)
+    fig, axes = plt.subplots(nrows, ncols, figsize=(4.2 * ncols, row_height * nrows), squeeze=False)
     for ax in axes.flat[n_panels:]:
         ax.set_visible(False)
     return fig, axes
@@ -352,10 +358,11 @@ def _short(res: DatasetResult) -> str:
 
 def overview_delta_rho(results: list[DatasetResult], path: Path) -> None:
     """Delta rho vs W, one panel per dataset, all models."""
-    fig, axes = _grid(len(results))
+    fig, axes = _grid(len(results), row_height=3.9)
     for ax, res in zip(axes.flat, results, strict=False):
         ax.axhline(0, color=INK, lw=0.8)
         ax.axhline(res.epsilon, color=MUTED, ls="--", lw=1)
+        rho_lines = []
         for k, name in enumerate(res.models):
             d = _rows(res, name)
             st = _style(k)
@@ -363,7 +370,8 @@ def overview_delta_rho(results: list[DatasetResult], path: Path) -> None:
                 d["W"], d["delta_rho_ci_lo"], d["delta_rho_ci_hi"], color=st["color"], alpha=0.10, lw=0
             )
             ax.plot(d["W"], d["delta_rho"], label=name, **{**st, "markersize": 3.5, "linewidth": 1.6})
-        ax.set_title(_short(res), fontsize=8)
+            rho_lines.append(f"{name}: {_rho_n_label(d)}")
+        ax.set_title(_short(res) + "\n" + "\n".join(rho_lines), fontsize=8)
         ax.set_xlabel("Window size W (nt)")
         ax.set_ylabel("Δρ = ρ_N − ρ_W")
     axes.flat[0].legend(fontsize=7, loc="upper right")
@@ -373,7 +381,8 @@ def overview_delta_rho(results: list[DatasetResult], path: Path) -> None:
         fig,
         path,
         f"Bands: 95% paired block-bootstrap CI. Dashed grey: ε = {results[0].epsilon:g}. "
-        "Δρ > 0: the truncated fold agrees less with the probing data than the full fold.",
+        "Δρ > 0: the truncated fold agrees less with the probing data than the full fold. "
+        "Titles: each model's full-fold ρ_N with 95% CI.",
     )
 
 
